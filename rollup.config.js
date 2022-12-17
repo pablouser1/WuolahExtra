@@ -31,7 +31,8 @@ export default {
   input: 'src/index.ts',
   output: {
     file: 'dist/WuolahExtra.user.js',
-    format: 'esm'
+    format: 'esm',
+    sourcemap: true
   },
   plugins: plugins
 };
