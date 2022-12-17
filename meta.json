@@ -1,0 +1,14 @@
+{
+    "namespace": "Violentmonkey Scripts",
+    "match": [
+        "https://wuolah.com/v3/*"
+    ],
+    "run-at": "document-end",
+    "require": [
+        "https://openuserjs.org/src/libs/sizzle/GM_config.js"
+    ],
+    "grant": [
+        "GM_getValue",
+        "GM_setValue"
+    ]
+}
