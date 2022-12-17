@@ -1,7 +1,7 @@
 {
     "namespace": "Violentmonkey Scripts",
     "match": [
-        "https://wuolah.com/v3/*"
+        "https://wuolah.com/*"
     ],
     "run-at": "document-end",
     "require": [
