@@ -3,7 +3,7 @@
     "match": [
         "https://wuolah.com/*"
     ],
-    "run-at": "document-end",
+    "run-at": "document-start",
     "require": [
         "https://openuserjs.org/src/libs/sizzle/GM_config.js"
     ],

@@ -1,43 +1,49 @@
 import Helpers from './Helpers'
+import DownloadBody from './types/DownloadBody'
 
 
 export default class FetchRewriter {
-    private hook = [
+    private beforeActions = [
         {
-            'endpoint': '/download',
+            'endpoint': /^\/v2\/documents\/[0-9]+\/download$/,
             'action': this.removeAds
         }
     ]
 
-    private overwrite = [
+    private afterActions = [
         {
-            'endpoint': '/v2/me',
+            'endpoint': /^\/user\/me$/,
             'action': this.makePro
+        },
+        {
+            'endpoint': /^\/v2\/me$/,
+            'action': this.makeProV2
         }
     ]
 
-    mod (input: RequestInfo, init: RequestInit | undefined) {
+    before (input: RequestInfo, init: RequestInit | undefined) {
         const path = Helpers.getPath(input.toString())
-        const index = this.hook.findIndex(item => path.includes(item.endpoint))
+        const index = this.beforeActions.findIndex(item => item.endpoint.test(path))
         if (index !== -1) {
-            this.hook[index].action(init)
+            this.beforeActions[index].action(init)
         }
     }
 
     after (res: Response) {
         const path = Helpers.getPath(res.url)
-        const index = this.overwrite.findIndex(item => path.includes(item.endpoint))
+        const index = this.afterActions.findIndex(item => item.endpoint.test(path))
         if (index !== -1) {
-            this.overwrite[index].action(res)
+            this.afterActions[index].action(res)
         }
     }
 
     // -- Before -- //
     removeAds (init: RequestInit | undefined) {
         Helpers.log('Removing ads')
-        if (init) {
-            // Overwrite body and force no ads
-            init.body = JSON.stringify({
+        if (init && init.body) {
+            const old_body: DownloadBody = JSON.parse(init.body.toString())
+
+            const new_body: DownloadBody = {
                 "source": "W3",
                 "premium": 0,
                 "blocked": true,
@@ -49,14 +55,31 @@ export default class FetchRewriter {
                 "ubication1RequestedPubs": 0,
                 "ubication2RequestedPubs": 0,
                 "ubication3RequestedPubs": 0
-            })
+            }
+
+            if (old_body.captcha) {
+                new_body.captcha = old_body.captcha
+            }
+
+            if (old_body.captchaToken) {
+                new_body.captchaToken = new_body.captchaToken
+            }
+
+            // Overwrite body and force no ads
+            init.body = JSON.stringify(new_body)
         }
     }
 
     // -- After -- //
     makePro(res: Response) {
         Helpers.log('Making user client-side pro')
-        const json = () => res.clone().json().then((data) => ({ ...data, isPro: true }));
+        const json = () => res.clone().json().then(data => ({ ...data, pro: 1 }));
+        res.json = json;
+    }
+
+    makeProV2(res: Response) {
+        Helpers.log('Making user client-side pro V2')
+        const json = () => res.clone().json().then(data => ({ ...data, isPro: true }));
         res.json = json;
     }
 }

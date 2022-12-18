@@ -4,6 +4,11 @@
 import FetchRewriter from './Fetch'
 import Helpers from './Helpers'
 
+// Skip annoying ads when refreshing
+if (window.location.pathname === '/refresh') {
+    window.location.replace('https://wuolah.com/')
+}
+
 // GM Config
 GM_config.init({
     id: 'wuolahextra',
@@ -22,15 +27,12 @@ const { fetch: origFetch } = unsafeWindow
 const rewrite = new FetchRewriter()
 
 // Fetch override
-unsafeWindow.fetch = async (input: RequestInfo, init: RequestInit | undefined) => {
-    rewrite.mod(input, init)
+unsafeWindow.fetch = async (input: RequestInfo, init: RequestInit | undefined): Promise<Response> => {
+    rewrite.before(input, init)
     const response = await origFetch(input, init)
     rewrite.after(response)
     return response
 }
-
-// Skip annoying ads at the beggining
-
 
 // Adding config button
 window.addEventListener('load', () => {
