@@ -1,13 +1,18 @@
 # WuolahExtra
-Userscript para Wuolah. Agrega funciones adicionales
+Userscript para Wuolah.
 
-Para usar este programa necesitas un gestor de userscripts instalado en tu navegador.
+Para usar este programa necesitas un gestor de userscripts (por ejemplo, [ViolentMonkey](https://violentmonkey.github.io)) instalado en tu navegador.
 
 ## Funciones implementadas
-* Quita (casi todos) los anuncios al descargar
+* Quita anuncios
+    * En los pdfs descargados
+    * En la página
+
+## Instalación
+Una vez hayas descargado tu gestor de userscripts, descarga el script desde la sección de [Releases](https://github.com/pablouser1/WuolahExtra/releases), ¡y listo!
 
 ## Desarrollo
-### Instalación
+### Dependencias
 ```bash
 yarn install
 ```
@@ -21,9 +26,6 @@ yarn dev
 ```bash
 yarn build
 ```
-
-## TODO
-* Quitar todos los anuncios
 
 ## Créditos
 * [GM_Config](https://github.com/sizzlemctwizzle/GM_config) | [LICENSE](https://github.com/sizzlemctwizzle/GM_config/blob/master/LICENSE)
