@@ -27,7 +27,8 @@ const { fetch: origFetch } = unsafeWindow
 const rewrite = new FetchRewriter()
 
 // Fetch override
-unsafeWindow.fetch = async (input: RequestInfo, init: RequestInit | undefined): Promise<Response> => {
+unsafeWindow.fetch = async (...args): Promise<Response> => {
+    let [ input, init ] = args;
     rewrite.before(input, init)
     const response = await origFetch(input, init)
     rewrite.after(response)

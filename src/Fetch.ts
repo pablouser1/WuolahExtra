@@ -21,7 +21,7 @@ export default class FetchRewriter {
         }
     ]
 
-    before (input: RequestInfo, init: RequestInit | undefined) {
+    before (input: RequestInfo | URL, init: RequestInit | undefined) {
         const path = Helpers.getPath(input.toString())
         const index = this.beforeActions.findIndex(item => item.endpoint.test(path))
         if (index !== -1) {
@@ -43,26 +43,21 @@ export default class FetchRewriter {
         if (init && init.body) {
             const old_body: DownloadBody = JSON.parse(init.body.toString())
 
-            const new_body: DownloadBody = {
-                "source": "W3",
-                "premium": 0,
-                "blocked": true,
-                "ubication17ExpectedPubs": 0,
-                "ubication1ExpectedPubs": 0,
-                "ubication2ExpectedPubs": 0,
-                "ubication3ExpectedPubs": 0,
-                "ubication17RequestedPubs": 0,
-                "ubication1RequestedPubs": 0,
-                "ubication2RequestedPubs": 0,
-                "ubication3RequestedPubs": 0
-            }
-
-            if (old_body.captcha) {
-                new_body.captcha = old_body.captcha
-            }
-
-            if (old_body.captchaToken) {
-                new_body.captchaToken = new_body.captchaToken
+            const new_body = {
+                ...old_body,
+                ...{
+                    "source": "W3",
+                    "premium": 0,
+                    "blocked": true,
+                    "ubication17ExpectedPubs": 0,
+                    "ubication1ExpectedPubs": 0,
+                    "ubication2ExpectedPubs": 0,
+                    "ubication3ExpectedPubs": 0,
+                    "ubication17RequestedPubs": 0,
+                    "ubication1RequestedPubs": 0,
+                    "ubication2RequestedPubs": 0,
+                    "ubication3RequestedPubs": 0
+                }
             }
 
             // Overwrite body and force no ads
