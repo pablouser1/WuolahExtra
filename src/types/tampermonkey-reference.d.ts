@@ -1,4 +1,4 @@
-declare var unsafeWindow : Window;
+declare var unsafeWindow : Window & typeof globalThis;
 
 declare var GM_info : {
     version          : string,

@@ -35,6 +35,14 @@ unsafeWindow.fetch = async (...args): Promise<Response> => {
     return response
 }
 
+// URL.createObjectURL override
+const { createObjectURL: origcreateObjectURL } = unsafeWindow.URL
+
+// TODO: Limpiar completamente el Blob
+unsafeWindow.URL.createObjectURL = (obj: Blob | MediaSource): string => {
+    return origcreateObjectURL(obj)
+}
+
 // Adding config button
 window.addEventListener('load', () => {
     const config = document.createElement('button')
