@@ -1,3 +1,4 @@
+import Log from './constants/Log'
 import Helpers from './Helpers'
 import DownloadBody from './types/DownloadBody'
 
@@ -39,10 +40,10 @@ export default class FetchRewriter {
 
     // -- Before -- //
     removeAds (init: RequestInit | undefined) {
-        Helpers.log('Removing ads')
+        Helpers.log('Removing ads', Log.INFO)
         if (init && init.body) {
             const old_body: DownloadBody = JSON.parse(init.body.toString())
-
+            Helpers.log('Old Body: ' + JSON.stringify(old_body), Log.DEBUG)
             const new_body = {
                 ...old_body,
                 ...{
@@ -67,13 +68,13 @@ export default class FetchRewriter {
 
     // -- After -- //
     makePro(res: Response) {
-        Helpers.log('Making user client-side pro')
+        Helpers.log('Making user client-side pro', Log.INFO)
         const json = () => res.clone().json().then(data => ({ ...data, pro: 1 }));
         res.json = json;
     }
 
     makeProV2(res: Response) {
-        Helpers.log('Making user client-side pro V2')
+        Helpers.log('Making user client-side pro V2', Log.INFO)
         const json = () => res.clone().json().then(data => ({ ...data, isPro: true }));
         res.json = json;
     }

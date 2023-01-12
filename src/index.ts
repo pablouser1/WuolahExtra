@@ -1,6 +1,7 @@
 /// <reference path="types/GM_Config.ts" />
 /// <reference path="types/tampermonkey-reference.d.ts" />
 
+import Log from './constants/Log'
 import FetchRewriter from './Fetch'
 import Helpers from './Helpers'
 
@@ -21,7 +22,7 @@ GM_config.init({
     }
 })
 
-Helpers.log('STARTING')
+Helpers.log('STARTING', Log.INFO)
 const { fetch: origFetch } = unsafeWindow
 
 const rewrite = new FetchRewriter()

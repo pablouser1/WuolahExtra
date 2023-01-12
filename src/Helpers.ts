@@ -1,7 +1,17 @@
+import Log from "./constants/Log"
+
 export default class Helpers {
-    static log(msg: string): void {
-        if (GM_config.get('debug')) {
-            console.debug(`[WuolahExtra] ${msg}`)
+    static log(msg: string, mode: Log = Log.DEBUG): void {
+        const data = `[WuolahExtra] ${msg}`
+        switch (mode) {
+            case Log.DEBUG:
+                if (GM_config.get('debug')) {
+                    console.debug(data)
+                }
+                break
+            case Log.INFO:
+                console.log(data)
+                break
         }
     }
 
