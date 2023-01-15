@@ -1,9 +1,8 @@
-import Log from './constants/Log'
-import Helpers from './Helpers'
-import DownloadBody from './types/DownloadBody'
+import Log from '../constants/Log'
+import Helpers from '../Helpers'
+import DownloadBody from '../types/DownloadBody'
 
-
-export default class FetchRewriter {
+class FetchRewriter {
     private beforeActions = [
         {
             'endpoint': /^\/v2\/documents\/[0-9]+\/download$/,
@@ -42,10 +41,10 @@ export default class FetchRewriter {
     removeAds (init: RequestInit | undefined) {
         Helpers.log('Removing ads', Log.INFO)
         if (init && init.body) {
-            const old_body: DownloadBody = JSON.parse(init.body.toString())
-            Helpers.log('Old Body: ' + JSON.stringify(old_body), Log.DEBUG)
-            const new_body = {
-                ...old_body,
+            const oldBody: DownloadBody = JSON.parse(init.body.toString())
+            Helpers.log('Old Body: ' + JSON.stringify(oldBody), Log.DEBUG)
+            const newBody = {
+                ...oldBody,
                 ...{
                     "source": "W3",
                     "premium": 0,
@@ -62,7 +61,7 @@ export default class FetchRewriter {
             }
 
             // Overwrite body and force no ads
-            init.body = JSON.stringify(new_body)
+            init.body = JSON.stringify(newBody)
         }
     }
 
@@ -79,3 +78,15 @@ export default class FetchRewriter {
         res.json = json;
     }
 }
+
+const { fetch: origFetch } = unsafeWindow
+
+const rewrite = new FetchRewriter()
+const fetchWrapper = async (input: RequestInfo | URL, init: RequestInit | undefined): Promise<Response> => {
+    rewrite.before(input, init)
+    const response = await origFetch(input, init)
+    rewrite.after(response)
+    return response
+}
+
+export default fetchWrapper

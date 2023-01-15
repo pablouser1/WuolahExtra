@@ -7,6 +7,7 @@ Para usar este programa necesitas un gestor de userscripts (por ejemplo, [Violen
 * Quita anuncios
     * En los pdfs descargados
     * En la página
+* Descargar carpeta como ZIP
 
 ## Instalación
 Una vez hayas descargado tu gestor de userscripts, descarga el script desde la sección de [Releases](https://github.com/pablouser1/WuolahExtra/releases), ¡y listo!
@@ -27,5 +28,10 @@ yarn dev
 yarn build
 ```
 
+## TODO
+* Limpiar completamente documento PDF
+* Hacer que sólo aparezca el documento limpio y no ambos
+
 ## Créditos
 * [GM_Config](https://github.com/sizzlemctwizzle/GM_config) | [LICENSE](https://github.com/sizzlemctwizzle/GM_config/blob/master/LICENSE)
+* [pdflib](https://github.com/Hopding/pdf-lib) | [LICENSE](https://github.com/Hopding/pdf-lib/blob/master/LICENSE.md)

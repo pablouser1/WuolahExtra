@@ -2,8 +2,11 @@
 /// <reference path="types/tampermonkey-reference.d.ts" />
 
 import Log from './constants/Log'
-import FetchRewriter from './Fetch'
+import fetchWrapper from './interceptors/Fetch'
+import objectURLWrapper from './interceptors/ObjectURL'
 import Helpers from './Helpers'
+
+Helpers.log('STARTING', Log.INFO)
 
 // Skip annoying ads when refreshing
 if (window.location.pathname === '/refresh') {
@@ -16,32 +19,23 @@ GM_config.init({
     fields: {
         debug: {
             type: 'checkbox',
-            label: 'Enable debug mode',
+            label: 'Modo debugging',
             default: false
+        },
+        clear: {
+            type: 'checkbox',
+            label: 'Limpiar PDF al descargarlo (en pruebas)',
+            default: true
         }
     }
 })
 
-Helpers.log('STARTING', Log.INFO)
-const { fetch: origFetch } = unsafeWindow
-
-const rewrite = new FetchRewriter()
-
 // Fetch override
-unsafeWindow.fetch = async (...args): Promise<Response> => {
-    let [ input, init ] = args;
-    rewrite.before(input, init)
-    const response = await origFetch(input, init)
-    rewrite.after(response)
-    return response
-}
+unsafeWindow.fetch = fetchWrapper
 
-// URL.createObjectURL override
-const { createObjectURL: origcreateObjectURL } = unsafeWindow.URL
-
-// TODO: Limpiar completamente el Blob
-unsafeWindow.URL.createObjectURL = (obj: Blob | MediaSource): string => {
-    return origcreateObjectURL(obj)
+// ObjectURL override
+if (GM_config.get('clear')) {
+    unsafeWindow.URL.createObjectURL = objectURLWrapper
 }
 
 // Adding config button

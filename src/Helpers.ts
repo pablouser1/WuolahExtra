@@ -24,4 +24,13 @@ export default class Helpers {
             return url_str // If there is an error the URL is probably the path itself
         }
     }
+
+    static isPdf(data: ArrayBuffer): boolean {
+        var arr = (new Uint8Array(data)).subarray(0, 5);
+        var header = "";
+        for(var i = 0; i < arr.length; i++) {
+           header += arr[i].toString(16);
+        }
+        return header === '255044462d'; // PDF header
+    }
 }

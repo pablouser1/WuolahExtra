@@ -1,3 +1,12 @@
+/**
+ * 17 -> Portada
+ * 
+ * 1 -> A4
+ * 
+ * 2 -> Lateral
+ * 
+ * 3 -> Footer
+ */
 export default interface DownloadBody {
     source: string;
     premium: number;
