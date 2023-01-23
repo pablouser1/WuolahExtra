@@ -24,7 +24,7 @@ GM_config.init({
         },
         clear: {
             type: 'checkbox',
-            label: 'Limpiar PDF al descargarlo (en pruebas)',
+            label: 'Limpiar PDF al descargarlo (WIP)',
             default: true
         }
     }
