@@ -6,7 +6,7 @@
     "run-at": "document-start",
     "require": [
         "https://openuserjs.org/src/libs/sizzle/GM_config.js",
-        "https://unpkg.com/pdf-lib@1.4.0/dist/pdf-lib.min.js"
+        "https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"
     ],
     "grant": [
         "GM_getValue",

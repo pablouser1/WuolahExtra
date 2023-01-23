@@ -1,8 +1,10 @@
 import Log from "./constants/Log"
 
 export default class Helpers {
+    private static logValues = Object.values(Log)
+
     static log(msg: string, mode: Log = Log.DEBUG): void {
-        const data = `[WuolahExtra] ${msg}`
+        const data = `[WuolahExtra] (${Helpers.logValues[mode]}) ${msg}`
         switch (mode) {
             case Log.DEBUG:
                 if (GM_config.get('debug')) {
