@@ -30,7 +30,6 @@ yarn build
 
 ## TODO
 * Limpiar completamente documento PDF
-* Hacer que sólo aparezca el documento limpio y no ambos
 
 ## Créditos
 * [GM_Config](https://github.com/sizzlemctwizzle/GM_config) | [LICENSE](https://github.com/sizzlemctwizzle/GM_config/blob/master/LICENSE)

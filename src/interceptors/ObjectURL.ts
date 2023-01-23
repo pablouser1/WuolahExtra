@@ -25,7 +25,7 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
             Helpers.log(err.message, Log.DEBUG)
         })
     }
-    return origcreateObjectURL(obj)
+    return "javascript:void(0)"
 }
 
 export default objectURLWrapper
