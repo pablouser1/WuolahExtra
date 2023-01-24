@@ -38,11 +38,24 @@ if (GM_config.get('clear')) {
     unsafeWindow.URL.createObjectURL = objectURLWrapper
 }
 
-// Adding config button
-window.addEventListener('load', () => {
+const addSettings = () => {
     const config = document.createElement('button')
     config.setAttribute('style', 'position: absolute; top: 150px; right: 10px;')
     config.onclick = () => GM_config.open()
     config.innerText = 'WuolahExtra Config'
     document.body.appendChild(config)
+}
+
+const addComunities = () => {
+    const a = document.createElement('a')
+    a.setAttribute('style', 'position: absolute; top: 200px; right: 10px;')
+    a.href = "https://wuolah.com/settings/my-communities"
+    a.innerText = 'Elegir otra carrera'
+    document.body.appendChild(a)
+}
+
+// Adding config button
+window.addEventListener('load', () => {
+    addSettings()
+    addComunities()
 })
