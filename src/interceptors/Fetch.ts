@@ -67,15 +67,19 @@ class FetchRewriter {
 
     // -- After -- //
     makePro(res: Response) {
-        Helpers.log('Making user client-side pro', Log.INFO)
-        const json = () => res.clone().json().then(data => ({ ...data, pro: 1 }));
-        res.json = json;
+        if (res.ok) {
+            Helpers.log('Making user client-side pro', Log.INFO)
+            const json = () => res.clone().json().then(data => ({ ...data, pro: 1 }));
+            res.json = json;
+        }
     }
 
     makeProV2(res: Response) {
-        Helpers.log('Making user client-side pro V2', Log.INFO)
-        const json = () => res.clone().json().then(data => ({ ...data, isPro: true }));
-        res.json = json;
+        if (res.ok) {
+            Helpers.log('Making user client-side pro V2', Log.INFO)
+            const json = () => res.clone().json().then(data => ({ ...data, isPro: true }));
+            res.json = json;
+        }
     }
 }
 

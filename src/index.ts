@@ -8,11 +8,6 @@ import Helpers from './Helpers'
 
 Helpers.log('STARTING', Log.INFO)
 
-// Skip annoying ads when refreshing
-if (window.location.pathname === '/refresh') {
-    window.location.replace('https://wuolah.com/')
-}
-
 // GM Config
 GM_config.init({
     id: 'wuolahextra',
@@ -55,7 +50,11 @@ const addComunities = () => {
 }
 
 // Adding config button
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     addSettings()
     addComunities()
+    // Skip annoying ads when refreshing
+    if (window.location.pathname === '/refresh') {
+        window.location.href = 'https://wuolah.com/'
+    }
 })

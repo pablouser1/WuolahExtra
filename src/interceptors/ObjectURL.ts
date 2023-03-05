@@ -3,6 +3,17 @@ import PDFLib from '../types/pdflib'
 import Log from '../constants/Log'
 import Helpers from '../Helpers'
 
+const openBlob = (obj: Blob, setDownload: boolean, title?: string): void => {
+    const url = origcreateObjectURL(obj)
+    const a = document.createElement('a')
+    a.href = url
+    if (setDownload) {
+        a.download = title || 'wuolahextra-out'
+    }
+
+    a.click()
+}
+
 const { createObjectURL: origcreateObjectURL } = unsafeWindow.URL
 
 const objectURLWrapper = (obj: Blob | MediaSource): string => {
@@ -15,16 +26,14 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
         if (Helpers.isPdf(res)) {
             const doc = await PDFLib.PDFDocument.load(res)
             Helpers.log('Limpiando documento', Log.INFO)
-            // Spam primer página
+            // Spam primera página
             doc.removePage(0)
             // Guardar
             const data = await doc.save()
             const newBlob = new Blob([data])
-            const url = origcreateObjectURL(newBlob)
-            const a = document.createElement('a')
-            a.href = url
-            a.download = doc.getTitle() || 'wuolahextra-out'
-            a.click()
+            openBlob(newBlob, true, doc.getTitle())
+        } else {
+            openBlob(obj, false)
         }
     }).catch((err: MissingPDFHeaderError) => {
         Helpers.log(err.message, Log.DEBUG)
