@@ -30,7 +30,7 @@ yarn build
 
 ## TODO
 * Limpiar completamente documento PDF
-
+* Limpiar documentos PDF dentro de zip
 ## Créditos
 * [GM_Config](https://github.com/sizzlemctwizzle/GM_config) | [LICENSE](https://github.com/sizzlemctwizzle/GM_config/blob/master/LICENSE)
 * [pdflib](https://github.com/Hopding/pdf-lib) | [LICENSE](https://github.com/Hopding/pdf-lib/blob/master/LICENSE.md)
