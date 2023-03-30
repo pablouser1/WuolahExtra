@@ -1,4 +1,4 @@
-import { MissingPDFHeaderError } from 'pdf-lib'
+import type { MissingPDFHeaderError } from 'pdf-lib'
 import PDFLib from '../types/pdflib'
 import Log from '../constants/Log'
 import Helpers from '../Helpers'
@@ -22,9 +22,9 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
     }
     
     // Conseguimos los datos y vemos si los headers son los de un pdf
-    obj.arrayBuffer().then(async (res) => {
-        if (Helpers.isPdf(res)) {
-            const doc = await PDFLib.PDFDocument.load(res)
+    obj.arrayBuffer().then(async (buf) => {
+        if (Helpers.isPdf(buf)) {
+            const doc = await PDFLib.PDFDocument.load(buf)
             Helpers.log('Limpiando documento', Log.INFO)
             // Spam primera página
             doc.removePage(0)

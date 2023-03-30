@@ -1,3 +1,4 @@
 /.vscode
 /dist
+/tmp
 node_modules
