@@ -22,16 +22,20 @@ GM_config.init({
             label: 'Limpiar PDF al descargarlo (WIP)',
             default: true
         }
+    },
+    events: {
+        init: () => {
+            // ObjectURL override
+            if (GM_config.get('clear')) {
+                unsafeWindow.URL.createObjectURL = objectURLWrapper
+            }
+            
+        }
     }
 })
 
 // Fetch override
 unsafeWindow.fetch = fetchWrapper
-
-// ObjectURL override
-if (GM_config.get('clear')) {
-    unsafeWindow.URL.createObjectURL = objectURLWrapper
-}
 
 const addSettings = () => {
     const config = document.createElement('button')
