@@ -12,6 +12,9 @@ Para usar este programa necesitas un gestor de userscripts (por ejemplo, [Violen
 ## Instalación
 Una vez hayas descargado tu gestor de userscripts, descarga el script desde la sección de [Releases](https://github.com/pablouser1/WuolahExtra/releases), ¡y listo!
 
+## Configuración
+Puedes acceder a la configuración del script desde tu gestor de userscripts en el icono de tu barra de herramientas ([más info](https://wiki.greasespot.net/Greasemonkey_Manual:Monkey_Menu#The_Menu))
+
 ## Desarrollo
 ### Dependencias
 ```bash

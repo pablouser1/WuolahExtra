@@ -28,8 +28,8 @@ export default class Helpers {
     }
 
     static isPdf(data: ArrayBuffer): boolean {
-        var arr = (new Uint8Array(data)).subarray(0, 5);
-        var header = "";
+        const arr = (new Uint8Array(data)).subarray(0, 5);
+        let header = "";
         for(var i = 0; i < arr.length; i++) {
            header += arr[i].toString(16);
         }

@@ -25,7 +25,7 @@ class FetchRewriter {
         const path = Helpers.getPath(input.toString())
         const index = this.beforeActions.findIndex(item => item.endpoint.test(path))
         if (index !== -1) {
-            this.beforeActions[index].action(init)
+            this.beforeActions[index].action(input, init)
         }
     }
 
@@ -38,7 +38,7 @@ class FetchRewriter {
     }
 
     // -- Before -- //
-    removeAds (init: RequestInit | undefined) {
+    removeAds (_input: RequestInfo | URL, init: RequestInit | undefined) {
         Helpers.log('Removing ads', Log.INFO)
         if (init && init.body) {
             const oldBody: DownloadBody = JSON.parse(init.body.toString())
@@ -47,7 +47,7 @@ class FetchRewriter {
                 ...oldBody,
                 ...{
                     "source": "W3",
-                    "premium": 0,
+                    "premium": 1,
                     "blocked": true,
                     "ubication17ExpectedPubs": 0,
                     "ubication1ExpectedPubs": 0,

@@ -1,7 +1,8 @@
 import metablock from 'rollup-plugin-userscript-metablock'
 import typescript from '@rollup/plugin-typescript'
 import serve from 'rollup-plugin-serve'
-import pkg from './package.json'
+import sass from 'rollup-plugin-sass'
+import pkg from './package.json' assert {type: "json"}
 
 const plugins = [
   metablock({
@@ -15,7 +16,8 @@ const plugins = [
       license: pkg.license,
     }
   }),
-  typescript()
+  typescript(),
+  sass()
 ]
 
 if (process.env.APP_MODE === 'development') {
@@ -34,5 +36,5 @@ export default {
     format: 'esm',
     sourcemap: true
   },
-  plugins: plugins
+  plugins
 };
