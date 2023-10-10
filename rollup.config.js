@@ -29,7 +29,8 @@ if (process.env.APP_MODE === 'development') {
   }))
 }
 
-export default {
+/** @type {import('rollup').RollupOptions} */
+const config = {
   input: 'src/index.ts',
   output: {
     file: 'dist/WuolahExtra.user.js',
@@ -37,4 +38,6 @@ export default {
     sourcemap: true
   },
   plugins
-};
+}
+
+export default config

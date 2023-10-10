@@ -2,16 +2,30 @@
 Removes unnecessary UI
 */
 
+@mixin hide {
+    display: none;
+}
+
+/* Social */
+#social-community {
+    @include hide;
+}
+
 /* Community */
 #community_layout main {
     div.css-4p83pq, hr, div.chakra-stack.css-n21gh5, div.css-8nthb6 {
-        display: none;
+        @include hide;
     }
 }
 
 /* Subject */
 #subject_layout {
     div.chakra-stack.css-vhl2wk, div.css-l0afcj {
-        display: none;
+        @include hide;
     }
+}
+
+/* Spam */
+#sponsor-tablet-image {
+    @include hide;
 }

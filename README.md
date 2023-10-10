@@ -16,12 +16,12 @@ Una vez hayas descargado tu gestor de userscripts, descarga el script desde la s
 Puedes acceder a la configuración del script desde tu gestor de userscripts en el icono de tu barra de herramientas ([más info](https://wiki.greasespot.net/Greasemonkey_Manual:Monkey_Menu#The_Menu))
 
 ## Desarrollo
-### Dependencias
+### Instalar dependencias
 ```bash
 yarn install
 ```
 
-### Modo debug
+### Modo desarrollo
 ```bash
 yarn dev
 ```
