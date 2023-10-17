@@ -8,6 +8,7 @@ Para usar este programa necesitas un gestor de userscripts (por ejemplo, [Violen
     * En los pdfs descargados
     * En la página
 * Descargar carpeta como ZIP
+* Limpiar partes de la interfaz innecesarias
 
 ## Instalación
 Una vez hayas descargado tu gestor de userscripts, descarga el script desde la sección de [Releases](https://github.com/pablouser1/WuolahExtra/releases), ¡y listo!
