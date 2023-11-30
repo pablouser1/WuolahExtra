@@ -1,23 +1,20 @@
 import Log from '../constants/Log'
 import Helpers from '../Helpers'
-import DownloadBody from '../types/DownloadBody'
+import type DownloadBodyNew from '../types/DownloadBodyNew'
+import type DownloadBodyOld from '../types/DownloadBodyOld'
 
 class FetchRewriter {
     private beforeActions = [
         {
-            'endpoint': /^\/v2\/documents\/[0-9]+\/download$/,
+            'endpoint':  /^\/v2\/download$/,
             'action': this.removeAds
         }
     ]
 
     private afterActions = [
         {
-            'endpoint': /^\/user\/me$/,
-            'action': this.makePro
-        },
-        {
             'endpoint': /^\/v2\/me$/,
-            'action': this.makeProV2
+            'action': this.makePro
         }
     ]
 
@@ -38,43 +35,44 @@ class FetchRewriter {
     }
 
     // -- Before -- //
-    removeAds (_input: RequestInfo | URL, init: RequestInit | undefined) {
+    removeAds (input: RequestInfo | URL, init: RequestInit | undefined) {
         Helpers.log('Removing ads', Log.INFO)
-        if (init && init.body) {
-            const oldBody: DownloadBody = JSON.parse(init.body.toString())
-            Helpers.log('Old Body: ' + JSON.stringify(oldBody), Log.DEBUG)
-            const newBody = {
-                ...oldBody,
-                ...{
-                    "source": "W3",
-                    "premium": 1,
-                    "blocked": true,
-                    "ubication17ExpectedPubs": 0,
-                    "ubication1ExpectedPubs": 0,
-                    "ubication2ExpectedPubs": 0,
-                    "ubication3ExpectedPubs": 0,
-                    "ubication17RequestedPubs": 0,
-                    "ubication1RequestedPubs": 0,
-                    "ubication2RequestedPubs": 0,
-                    "ubication3RequestedPubs": 0
-                }
-            }
 
-            // Overwrite body and force no ads
-            init.body = JSON.stringify(newBody)
+        if (!(init && init.body)) {
+            Helpers.log("No body on RemoveAds", Log.DEBUG);
+            return;
         }
+
+        if (!(input instanceof URL)) {
+            Helpers.log("Input on RemoveAds is not MutableStr", Log.DEBUG);
+            return;
+        }
+
+        const oldBody: DownloadBodyNew = JSON.parse(init.body.toString())
+        Helpers.log('Old Body: ' + JSON.stringify(oldBody), Log.DEBUG)
+
+        input.pathname = `/v2/documents/${oldBody.fileId}/download`
+
+        const newBody: DownloadBodyOld = {
+            "source": "W3",
+            "premium": 1,
+            "blocked": true,
+            "ubication17ExpectedPubs": 0,
+            "ubication1ExpectedPubs": 0,
+            "ubication2ExpectedPubs": 0,
+            "ubication3ExpectedPubs": 0,
+            "ubication17RequestedPubs": 0,
+            "ubication1RequestedPubs": 0,
+            "ubication2RequestedPubs": 0,
+            "ubication3RequestedPubs": 0
+        }
+
+        // Overwrite body and force no ads
+        init.body = JSON.stringify(newBody)
     }
 
     // -- After -- //
     makePro(res: Response) {
-        if (res.ok) {
-            Helpers.log('Making user client-side pro', Log.INFO)
-            const json = () => res.clone().json().then(data => ({ ...data, pro: 1 }));
-            res.json = json;
-        }
-    }
-
-    makeProV2(res: Response) {
         if (res.ok) {
             Helpers.log('Making user client-side pro V2', Log.INFO)
             const json = () => res.clone().json().then(data => ({ ...data, isPro: true }));
@@ -87,8 +85,15 @@ const { fetch: origFetch } = unsafeWindow
 
 const rewrite = new FetchRewriter()
 const fetchWrapper = async (input: RequestInfo | URL, init: RequestInit | undefined): Promise<Response> => {
-    rewrite.before(input, init)
-    const response = await origFetch(input, init)
+    let newInput: RequestInfo | URL = input;
+
+    // Allow to rewrite parameter
+    if (typeof input === "string" && input.includes("/v2/download")) {
+        newInput = new URL(input);
+    }
+
+    rewrite.before(newInput, init)
+    const response = await origFetch(newInput, init)
     rewrite.after(response)
     return response
 }
