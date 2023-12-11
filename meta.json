@@ -8,6 +8,8 @@
         "https://openuserjs.org/src/libs/sizzle/GM_config.js",
         "https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"
     ],
+    "downloadURL": "https://github.com/pablouser1/WuolahExtra/releases/latest/download/WuolahExtra.user.js",
+    "updateURL": "https://github.com/pablouser1/WuolahExtra/releases/latest/download/WuolahExtra.user.js",
     "grant": [
         "GM_getValue",
         "GM_setValue",
