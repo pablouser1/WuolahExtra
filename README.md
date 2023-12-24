@@ -15,30 +15,29 @@ Una vez hayas descargado tu gestor de userscripts, descarga el script desde la s
 ## Configuración
 Puedes acceder a la configuración del script desde tu gestor de userscripts en el icono de tu barra de herramientas ([más info](https://wiki.greasespot.net/Greasemonkey_Manual:Monkey_Menu#The_Menu))
 
-### Secciones
-#### Debug
+### Debug
 Muestra información para desarrolladores en la consola
 
-#### Métodos de limpieza de PDFs
-##### GulagCleaner (_gulag_)
+### Métodos de limpieza de PDFs
+#### GulagCleaner (_gulag_)
 ✅ Buen funcionamiento, activado por defecto
 
 Internamente usa el paquete `gulagcleaner_wasm`.
 
-##### Wuolah Params (_params_)
+#### Wuolah Params (_params_)
 ⚠️ Puede ser eliminado en cualquier momento
 
 Usa un endpoint antiguo de Wuolah, por ahora da buenos resultados.
 
-##### PDFLib (_pdflib_)
+#### PDFLib (_pdflib_)
 ⚠️ Sin terminar
 
 Usa el paquete `pdf-lib`, por ahora solo quita la primera página 
 
-##### Ninguno (_none_)
+#### Ninguno (_none_)
 Deshabilita la eliminación de anuncios
 
-#### Limpiar UI
+### Limpiar UI
 Elimina elementos de la interfaz como patrocinios, enlaces sociales...
 
 ## Desarrollo
