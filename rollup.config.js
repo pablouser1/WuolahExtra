@@ -1,3 +1,4 @@
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import metablock from 'rollup-plugin-userscript-metablock'
 import typescript from '@rollup/plugin-typescript'
 import serve from 'rollup-plugin-serve'
@@ -16,6 +17,7 @@ const plugins = [
       license: pkg.license,
     }
   }),
+  nodeResolve(),
   typescript(),
   sass()
 ]

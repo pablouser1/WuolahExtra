@@ -1,3 +1,4 @@
+import { initSync } from "gulagcleaner_wasm"
 import Log from "./constants/Log"
 
 export default class Helpers {
@@ -34,5 +35,12 @@ export default class Helpers {
            header += arr[i].toString(16);
         }
         return header === '255044462d'; // PDF header
+    }
+
+    static initGulag(): void {
+        Helpers.log("Injecting WASM", Log.DEBUG);
+        fetch(GM_getResourceURL("gulag-wasm"))
+            .then(res => res.arrayBuffer())
+            .then(data => initSync(data))
     }
 }

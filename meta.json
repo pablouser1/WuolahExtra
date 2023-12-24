@@ -8,12 +8,16 @@
         "https://openuserjs.org/src/libs/sizzle/GM_config.js",
         "https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"
     ],
+    "resource": {
+        "gulag-wasm": "https://cdn.jsdelivr.net/npm/gulagcleaner_wasm@0.10.3/gulagcleaner_wasm_bg.wasm"
+    },
     "downloadURL": "https://github.com/pablouser1/WuolahExtra/releases/latest/download/WuolahExtra.user.js",
     "updateURL": "https://github.com/pablouser1/WuolahExtra/releases/latest/download/WuolahExtra.user.js",
     "grant": [
         "GM_getValue",
         "GM_setValue",
         "GM_addStyle",
-        "GM_registerMenuCommand"
+        "GM_registerMenuCommand",
+        "GM_getResourceURL"
     ]
 }

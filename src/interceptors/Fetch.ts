@@ -1,3 +1,4 @@
+import ClearMethods from '../constants/ClearMethods'
 import Log from '../constants/Log'
 import Helpers from '../Helpers'
 import type DownloadBodyNew from '../types/DownloadBodyNew'
@@ -7,7 +8,7 @@ class FetchRewriter {
     private beforeActions = [
         {
             'endpoint':  /^\/v2\/download$/,
-            'action': this.removeAds
+            'action': this.forceOldDownload
         }
     ]
 
@@ -35,16 +36,24 @@ class FetchRewriter {
     }
 
     // -- Before -- //
-    removeAds (input: RequestInfo | URL, init: RequestInit | undefined) {
-        Helpers.log('Removing ads', Log.INFO)
+    forceOldDownload (input: RequestInfo | URL, init: RequestInit | undefined) {
+        // Activar sólo si estamos usando el método de limpieza PARAMS
+        if (GM_config.get("clear_pdf").toString() !== ClearMethods.PARAMS) {
+            Helpers.log("Not params, ignore force old download endpoint", Log.DEBUG);
+            return;
+        }
+    
+        Helpers.log('Redirecting download to old endpoint', Log.INFO)
 
+        // No hay cuerpo
         if (!(init && init.body)) {
-            Helpers.log("No body on RemoveAds", Log.DEBUG);
+            Helpers.log("No body on forceOldDownload", Log.DEBUG);
             return;
         }
 
+        // La url es de un tipo inválido
         if (!(input instanceof URL)) {
-            Helpers.log("Input on RemoveAds is not MutableStr", Log.DEBUG);
+            Helpers.log("Input on forceOldDownload is not MutableStr", Log.DEBUG);
             return;
         }
 

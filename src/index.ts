@@ -6,6 +6,7 @@ import fetchWrapper from './interceptors/Fetch'
 import objectURLWrapper from './interceptors/ObjectURL'
 import Helpers from './Helpers'
 import { addOptions, cleanUI } from './ui'
+import ClearMethods from './constants/ClearMethods'
 
 Helpers.log('STARTING', Log.INFO)
 
@@ -18,10 +19,11 @@ GM_config.init({
             label: 'Modo debugging',
             default: false
         },
-        clear: {
-            type: 'checkbox',
-            label: 'Limpiar PDF al descargarlo (WIP)',
-            default: true
+        clear_pdf: {
+            type: 'select',
+            label: 'Método de limpieza de PDF',
+            options: ["none", "params", "gulag", "pdflib"],
+            default: ClearMethods.GULAG
         },
         clean_ui: {
             type: 'checkbox',
@@ -32,16 +34,28 @@ GM_config.init({
     events: {
         init: () => {
             // Ejecuta una vez tenga acceso a GM_config
-            // ObjectURL override
-            if (GM_config.get('clear')) {
+            const clearMethod = GM_config.get("clear_pdf").toString()
+
+            // ObjectURL override para gulag y pdflib
+            if (clearMethod === ClearMethods.PDFLIB || clearMethod === ClearMethods.GULAG) {
                 Helpers.log("Overriding createObjectURL", Log.DEBUG);
                 unsafeWindow.URL.createObjectURL = objectURLWrapper
             }
 
+            // Inyectar css
             if (GM_config.get('clean_ui')) {
                 Helpers.log("Injecting CSS", Log.DEBUG);
                 cleanUI()
             }
+
+            // Init wasm para Gulag
+            if (clearMethod === ClearMethods.GULAG) {
+                Helpers.initGulag()
+            }
+        },
+        save: () => {
+            alert("Recargando la página para aplicar los cambios")
+            window.location.reload()
         }
     }
 })
