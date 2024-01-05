@@ -1,5 +1,4 @@
 /// <reference path="types/GM_Config.ts" />
-/// <reference path="types/tampermonkey-reference.d.ts" />
 
 import Log from './constants/Log'
 import fetchWrapper from './interceptors/Fetch'

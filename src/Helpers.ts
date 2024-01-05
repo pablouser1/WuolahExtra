@@ -37,10 +37,11 @@ export default class Helpers {
         return header === '255044462d'; // PDF header
     }
 
-    static initGulag(): void {
+    static async initGulag(): Promise<void> {
         Helpers.log("Injecting WASM", Log.DEBUG);
-        fetch(GM_getResourceURL("gulag-wasm"))
-            .then(res => res.arrayBuffer())
-            .then(data => initSync(data))
+        const url = await GM.getResourceUrl("gulag-wasm")
+        const res = await fetch(url)
+        const buf = await res.arrayBuffer()
+        initSync(buf)
     }
 }
