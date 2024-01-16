@@ -2,7 +2,6 @@ import ClearMethods from '../constants/ClearMethods'
 import Log from '../constants/Log'
 import Helpers from '../Helpers'
 import { clean_pdf } from 'gulagcleaner_wasm'
-import type { PDFDocument } from 'pdf-lib'
 import PDFLib from '../types/pdflib'
 
 const { createObjectURL: origcreateObjectURL } = unsafeWindow.URL
@@ -29,10 +28,11 @@ const clearGulag = (buf: ArrayBuffer): BlobPart => {
 
 /**
  * Limpia el documento usando el método PDFLib
- * @param doc Documemnto sin limpiar
+ * @param buf Buffer de documento sin limpiar
  * @todo Limpiar todo correctamente
  */
-const clearPDFLib = async (doc: PDFDocument): Promise<BlobPart> => {
+const clearPDFLib = async (buf: ArrayBuffer): Promise<BlobPart> => {
+    const doc = await PDFLib.PDFDocument.load(buf)
     // Spam primera página
     doc.removePage(0)
     // Guardar
@@ -51,8 +51,7 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
             openBlob(obj)
             return
         }
-            
-        const doc = await PDFLib.PDFDocument.load(buf)
+
         Helpers.log('Limpiando documento', Log.INFO)
 
         // Elegimos método de limpieza
@@ -60,14 +59,14 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
         const clearMethod = GM_config.get("clear_pdf").toString()
         switch (clearMethod) {
             case ClearMethods.PDFLIB:
-                data = await clearPDFLib(doc)
+                data = await clearPDFLib(buf)
                 break
             case ClearMethods.GULAG:
                 data = clearGulag(buf)
                 break
             default:
-                alert("Invalid clear method!")
-                return
+                alert("Invalid clear method! Fallback to original pdf")
+                data = buf
         }
         
         // Nuevo blob y abrimos
