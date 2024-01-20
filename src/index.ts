@@ -1,13 +1,19 @@
-/// <reference path="types/GM_Config.ts" />
-
 import Log from './constants/Log'
-import fetchWrapper from './interceptors/Fetch'
 import objectURLWrapper from './interceptors/ObjectURL'
 import Helpers from './Helpers'
 import { addOptions, cleanUI } from './ui'
 import ClearMethods from './constants/ClearMethods'
+import FetchHook from './interceptors/Fetch'
+import Hooks from './constants/Hooks'
 
 Helpers.log('STARTING', Log.INFO)
+
+// Fetch hooking
+const fetchHook = new FetchHook()
+fetchHook.addHooks({
+    before: Hooks.BEFORE,
+    after: Hooks.AFTER
+})
 
 // GM Config
 GM_config.init({
@@ -21,7 +27,7 @@ GM_config.init({
         clear_pdf: {
             type: 'select',
             label: 'Método de limpieza de PDF',
-            options: ["none", "params", "gulag", "pdflib"],
+            options: Object.values(ClearMethods),
             default: ClearMethods.GULAG
         },
         clean_ui: {
@@ -32,6 +38,11 @@ GM_config.init({
     },
     events: {
         init: () => {
+            // Modo debug en fetch hook
+            if (GM_config.get("debug")) {
+                fetchHook.setDebug(true)
+            }
+
             // Ejecuta una vez tenga acceso a GM_config
             const clearMethod = GM_config.get("clear_pdf").toString()
 
@@ -53,14 +64,16 @@ GM_config.init({
             }
         },
         save: () => {
-            alert("Recargando la página para aplicar los cambios")
-            window.location.reload()
+            const ok = confirm("Los cambios se han guardado, ¿quieres refrescar la página para aplicar los cambios?")
+            if (ok) {
+                window.location.reload()
+            }
         }
     }
 })
 
-// Fetch override
-unsafeWindow.fetch = fetchWrapper
+// Monkey-patching fetch
+unsafeWindow.fetch = (...args) => fetchHook.entrypoint(...args)
 
 // Add menu
 addOptions()

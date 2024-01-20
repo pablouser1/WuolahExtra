@@ -7,7 +7,7 @@
  * 
  * 3 -> Footer
  */
-export default interface DownloadBody {
+export default interface DownloadBodyOld {
     source: string;
     premium: number;
     blocked: boolean;

@@ -2,7 +2,6 @@ import ClearMethods from '../constants/ClearMethods'
 import Log from '../constants/Log'
 import Helpers from '../Helpers'
 import { clean_pdf } from 'gulagcleaner_wasm'
-import PDFLib from '../types/pdflib'
 
 const { createObjectURL: origcreateObjectURL } = unsafeWindow.URL
 
