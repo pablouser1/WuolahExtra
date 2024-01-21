@@ -1,5 +1,5 @@
 enum Log {
-    DEBUG,INFO
+  DEBUG, INFO
 }
 
 export default Log

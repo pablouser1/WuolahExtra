@@ -30,4 +30,4 @@ jobs:
           artifactContentType: text/javascript
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: v${{ steps.package-version.outputs.current-version }}
-          allowUpdates: true
+          skipIfReleaseExists: true

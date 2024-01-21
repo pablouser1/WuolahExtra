@@ -3,29 +3,33 @@ Removes unnecessary UI
 */
 
 @mixin hide {
-    display: none;
+  display: none;
 }
 
 /* Social */
 #social-community {
-    @include hide;
+  @include hide;
 }
 
 /* Community */
 #community_layout main {
-    div.css-4p83pq, hr, div.chakra-stack.css-n21gh5, div.css-8nthb6 {
-        @include hide;
-    }
+  div.css-4p83pq,
+  hr,
+  div.chakra-stack.css-n21gh5,
+  div.css-8nthb6 {
+    @include hide;
+  }
 }
 
 /* Subject */
 #subject_layout {
-    div.chakra-stack.css-vhl2wk, div.css-l0afcj {
-        @include hide;
-    }
+  div.chakra-stack.css-vhl2wk,
+  div.css-l0afcj {
+    @include hide;
+  }
 }
 
 /* Spam */
 #sponsor-tablet-image {
-    @include hide;
+  @include hide;
 }

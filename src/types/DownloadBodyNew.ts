@@ -1,9 +1,9 @@
 export default interface DownloadBodyNew {
-    machineId: string,
-    adblockDetected: boolean,
-    fileId: number,
-    noAdsWithCoins: boolean,
-    ads: any[],
-    referralCode: string,
-    qrData: string | null
+  machineId: string,
+  adblockDetected: boolean,
+  fileId: number,
+  noAdsWithCoins: boolean,
+  ads: any[],
+  referralCode: string,
+  qrData: string | null
 };
