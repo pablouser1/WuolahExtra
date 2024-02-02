@@ -38,7 +38,7 @@ export default defineConfig({
         ],
         resource: {
           // Gulag WASM build
-          'gulag-wasm': 'https://cdn.jsdelivr.net/npm/gulagcleaner_wasm@0.12.1/gulagcleaner_wasm_bg.wasm'
+          'gulag-wasm': 'https://cdn.jsdelivr.net/npm/gulagcleaner_wasm@0.12.2/gulagcleaner_wasm_bg.wasm'
         },
         downloadURL: LATEST_URL,
         updateURL: LATEST_URL

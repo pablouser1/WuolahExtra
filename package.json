@@ -19,7 +19,7 @@
     "vite-plugin-monkey": "^3.5.1"
   },
   "dependencies": {
-    "gulagcleaner_wasm": "^0.12.1",
+    "gulagcleaner_wasm": "^0.12.2",
     "pdf-lib": "^1.17.1"
   }
 }
