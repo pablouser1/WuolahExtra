@@ -1,26 +1,21 @@
 import Misc from "../helpers/Misc";
-import { HookAfter, HookBefore, HookConfig } from "../types/Hooks";
+import { HookAfter, HookBefore, HookCommon, HookConfig } from "../types/Hooks";
 
-type FetchFunc = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>
+const { fetch: origFetch } = window
 
 export default class FetchHook {
-  origFetch: FetchFunc
   debug: boolean = false
 
   before: HookBefore[] = []
   after: HookAfter[] = []
 
-  constructor() {
-    this.origFetch = window.fetch
-  }
-
-  addHooks(hooks: HookConfig): void {
-    if (hooks.before !== undefined) {
-      this.before = hooks.before
+  addHooks(h: HookConfig): void {
+    if (h.before !== undefined) {
+      this.before = h.before
     }
 
-    if (hooks.after !== undefined) {
-      this.after = hooks.after
+    if (h.after !== undefined) {
+      this.after = h.after
     }
   }
 
@@ -32,7 +27,7 @@ export default class FetchHook {
     }
 
     this.beforeHandler(input, init)
-    const res = await this.origFetch(input, init)
+    const res = await origFetch(input, init)
     this.afterHandler(res)
     return res
   }
@@ -43,29 +38,39 @@ export default class FetchHook {
 
   private beforeHandler(input: RequestInfo | URL, init?: RequestInit) {
     const path = Misc.getPath(input.toString())
-    const hook = this.before.find(item => item.endpoint.test(path))
-    if (hook !== undefined) {
+    const h = this.before.find((item) => this._finder(item, path))
+    if (h !== undefined) {
       if (this.debug) {
-        console.log(`${hook.id} PRE`, { input, init })
+        console.log(`${h.id} PRE`, { input, init })
       }
-      hook.func(input, init)
+      h.func(input, init)
       if (this.debug) {
-        console.log(`${hook.id} POST`, { input, init })
+        console.log(`${h.id} POST`, { input, init })
       }
     }
   }
 
   private afterHandler(res: Response) {
     const path = Misc.getPath(res.url)
-    const hook = this.after.find(item => item.endpoint.test(path))
-    if (hook !== undefined) {
+    const h = this.after.find((item) => this._finder(item, path))
+    if (h !== undefined) {
       if (this.debug) {
-        console.log(`${hook.id} PRE`, { res })
+        console.log(`${h.id} PRE`, { res })
       }
-      hook.func(res)
+      h.func(res)
       if (this.debug) {
-        console.log(`${hook.id} POST`, { res })
+        console.log(`${h.id} POST`, { res })
       }
     }
+  }
+
+  private _finder(item: HookCommon, path: string) {
+    const found = item.endpoint.test(path)
+    if (found) {
+      return item.cond === undefined ? true : item.cond()
+    }
+
+    // Not found
+    return false
   }
 }

@@ -1,16 +1,16 @@
 import { GM } from "$"
 import { initSync } from "gulagcleaner_wasm"
-import { config } from "../common"
 import Log from "../constants/Log"
+import c from "../config"
 
 export default class Misc {
   private static logValues = Object.values(Log)
 
-  static log(msg: string, mode: Log = Log.DEBUG): void {
+  static log<T>(msg: T | T[], mode = Log.DEBUG): void {
     const data = `[WuolahExtra] (${Misc.logValues[mode]}) ${msg}`
     switch (mode) {
       case Log.DEBUG:
-        if (config.c.get('debug')) {
+        if (c().get('debug')) {
           console.debug(data)
         }
         break

@@ -1,12 +1,12 @@
 import { GM } from '$';
-import { config } from './common';
+import c from './config';
 import clean_ui from './styles/clean_ui.scss?inline'
 
 export const addOptions = () => {
   // Config
   GM.registerMenuCommand(
     "Configuración",
-    () => config.c.open(),
+    () => c().open(),
     'c'
   );
 }

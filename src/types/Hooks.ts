@@ -1,6 +1,7 @@
-interface HookCommon {
+export interface HookCommon {
   id: string
-  endpoint: RegExp
+  endpoint: RegExp,
+  cond?: () => FieldValue
 }
 
 export interface HookBefore extends HookCommon {

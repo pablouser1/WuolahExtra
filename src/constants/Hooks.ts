@@ -1,4 +1,4 @@
-import { config } from "../common";
+import c from "../config";
 import Misc from "../helpers/Misc";
 import DownloadBodyNew from "../types/DownloadBodyNew";
 import DownloadBodyOld from "../types/DownloadBodyOld";
@@ -11,7 +11,14 @@ export default class Hooks {
     {
       id: 'force-download',
       endpoint: /^\/v2\/download$/,
-      func: Hooks.forceOldDownload
+      func: Hooks.forceOldDownload,
+      cond: () => c().get("clear_pdf").toString() === ClearMethods.PARAMS
+    },
+    {
+      id: 'no-analytics',
+      endpoint: /^\/v2\/events$/,
+      func: Hooks.noAnalytics,
+      cond: () => c().get("no_analytics")
     }
   ]
 
@@ -20,17 +27,17 @@ export default class Hooks {
       id: 'make-pro',
       endpoint: /^\/v2\/me$/,
       func: Hooks.makePro
+    },
+    {
+      id: 'no-ui-ads',
+      endpoint: /^\/v2\/a-d-s$/,
+      func: Hooks.noUiAds,
+      cond: () => c().get("clean_ui")
     }
   ]
 
   // -- Before -- //
   static forceOldDownload(input: RequestInfo | URL, init?: RequestInit) {
-    // Activar sólo si estamos usando el método de limpieza PARAMS
-    if (config.c.get("clear_pdf").toString() !== ClearMethods.PARAMS) {
-      Misc.log("Not params, ignore force old download endpoint", Log.DEBUG);
-      return;
-    }
-
     Misc.log('Redirecting download to old endpoint', Log.INFO)
 
     // No hay cuerpo
@@ -66,12 +73,33 @@ export default class Hooks {
     init.body = JSON.stringify(newBody)
   }
 
+  static noAnalytics(_input: RequestInfo | URL, init?: RequestInit) {
+    if (init) {
+      Misc.log('Removing events', Log.INFO)
+      init.body = JSON.stringify({
+        events: []
+      })
+    }
+  }
+
   // -- After -- //
   static makePro(res: Response) {
     if (res.ok) {
       Misc.log('Making user client-side pro V2', Log.INFO)
-      const json = () => res.clone().json().then(data => ({ ...data, isPro: true }));
+      const json = () => res.clone().json().then(d => ({ ...d, isPro: true }));
       res.json = json;
+    }
+  }
+
+  static noUiAds(res: Response) {
+    if (res.ok) {
+      Misc.log('Wiping ui ads array', Log.INFO)
+
+      const json = async () => {
+        return { items: [] }
+      }
+
+      res.json = json
     }
   }
 }

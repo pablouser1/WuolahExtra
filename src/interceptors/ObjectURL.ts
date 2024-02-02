@@ -1,12 +1,11 @@
-import { unsafeWindow } from '$'
 import { PDFDocument } from 'pdf-lib'
 import ClearMethods from '../constants/ClearMethods'
 import Log from '../constants/Log'
 import Misc from '../helpers/Misc'
 import { clean_pdf } from 'gulagcleaner_wasm'
-import { config } from '../common'
+import c from '../config'
 
-const { createObjectURL: origcreateObjectURL } = unsafeWindow.URL
+const { createObjectURL: origcreateObjectURL } = window.URL
 
 /**
  * Wrapper para abrir un Blob
@@ -58,7 +57,7 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
 
     // Elegimos método de limpieza
     let data: BlobPart
-    const clearMethod = config.c.get("clear_pdf").toString()
+    const clearMethod = c().get("clear_pdf").toString()
     switch (clearMethod) {
       case ClearMethods.PDFLIB:
         data = await clearPDFLib(buf)
