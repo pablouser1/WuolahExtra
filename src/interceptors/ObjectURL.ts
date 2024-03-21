@@ -71,7 +71,7 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
     }
 
     // Nuevo blob y abrimos
-    const newBlob = new Blob([data])
+    const newBlob = new Blob([data], { type: "application/pdf" });
     openBlob(newBlob)
   })
 
