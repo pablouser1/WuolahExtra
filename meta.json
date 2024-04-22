@@ -1,0 +1,15 @@
+{
+  "namespace": "Violentmonkey Scripts",
+  "match": [
+    "https://wuolah.com/*"
+  ],
+  "grant": [
+    "GM_getValue",
+    "GM_setValue",
+    "GM.registerMenuCommand",
+    "GM.addStyle",
+    "GM.getResourceUrl"
+  ],
+  "downloadURL": "https://github.com/pablouser1/WuolahExtra/releases/latest/download/WuolahExtra.user.js",
+  "updateURL": "https://github.com/pablouser1/WuolahExtra/releases/latest/download/WuolahExtra.user.js"
+}

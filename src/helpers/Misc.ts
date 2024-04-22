@@ -1,7 +1,5 @@
-import { GM } from "$"
 import { initSync } from "gulagcleaner_wasm"
 import Log from "../constants/Log"
-import c from "../config"
 
 export default class Misc {
   private static logValues = Object.values(Log)
@@ -10,7 +8,7 @@ export default class Misc {
     const data = `[WuolahExtra] (${Misc.logValues[mode]}) ${msg}`
     switch (mode) {
       case Log.DEBUG:
-        if (c().get('debug')) {
+        if (GM_config.get('debug')) {
           console.debug(data)
         }
         break
@@ -41,10 +39,7 @@ export default class Misc {
 
   static async initGulag(): Promise<void> {
     Misc.log("Injecting WASM", Log.DEBUG);
-    // The TS types incorrectly say that GM has a
-    // method called "getResourceURL" instead of the real one
-    // @ts-expect-error
-    const url = await GM.getResourceUrl("gulag-wasm")
+    const url = await GM.getResourceUrl("gulagcleaner_wasm")
     const res = await fetch(url)
     const buf = await res.arrayBuffer()
     initSync(buf)

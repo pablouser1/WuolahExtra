@@ -196,6 +196,9 @@ declare class GM_configStruct<CustomTypes extends string = never> {
     isOpen: boolean;
 }
 
+/** Default GM_config object */
+declare let GM_config: GM_configStruct;
+
 /* GM_configField and related */
 
 declare class GM_configField {

@@ -3,7 +3,6 @@ import ClearMethods from '../constants/ClearMethods'
 import Log from '../constants/Log'
 import Misc from '../helpers/Misc'
 import { clean_pdf } from 'gulagcleaner_wasm'
-import c from '../config'
 
 const { createObjectURL: origcreateObjectURL } = window.URL
 
@@ -57,7 +56,7 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
 
     // Elegimos método de limpieza
     let data: BlobPart
-    const clearMethod = c().get("clear_pdf").toString()
+    const clearMethod = GM_config.get("clear_pdf").toString()
     switch (clearMethod) {
       case ClearMethods.PDFLIB:
         data = await clearPDFLib(buf)

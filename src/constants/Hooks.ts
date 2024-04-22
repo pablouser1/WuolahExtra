@@ -1,4 +1,3 @@
-import c from "../config";
 import Misc from "../helpers/Misc";
 import DownloadBodyNew from "../types/DownloadBodyNew";
 import DownloadBodyOld from "../types/DownloadBodyOld";
@@ -12,13 +11,13 @@ export default class Hooks {
       id: 'force-download',
       endpoint: /^\/v2\/download$/,
       func: Hooks.forceOldDownload,
-      cond: () => c().get("clear_pdf").toString() === ClearMethods.PARAMS
+      cond: () => GM_config.get("clear_pdf").toString() === ClearMethods.PARAMS
     },
     {
       id: 'no-analytics',
       endpoint: /^\/v2\/events$/,
       func: Hooks.noAnalytics,
-      cond: () => c().get("no_analytics")
+      cond: () => GM_config.get("no_analytics")
     }
   ]
 
@@ -32,7 +31,7 @@ export default class Hooks {
       id: 'no-ui-ads',
       endpoint: /^\/v2\/a-d-s$/,
       func: Hooks.noUiAds,
-      cond: () => c().get("clean_ui")
+      cond: () => GM_config.get("clean_ui")
     }
   ]
 

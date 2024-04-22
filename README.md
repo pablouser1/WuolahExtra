@@ -6,10 +6,10 @@ Para usar este programa necesitas un gestor de userscripts (por ejemplo, [Violen
 ## Funciones implementadas
 * Quita anuncios de los pdfs
 * Client-side PRO
-    * Puedes descargar carpetas como zips (ACTUALMENTE ROTO)
+  * Puedes descargar carpetas como zips (ACTUALMENTE ROTO)
 * Limpiar partes de la interfaz innecesarias
-    * Publicidad en el fondo
-    * Vídeos antes de descargar
+  * Publicidad en el fondo
+  * Vídeos antes de descargar
 
 ## Instalación
 Una vez hayas descargado tu gestor de userscripts, descarga el script desde la sección de [Releases](https://github.com/pablouser1/WuolahExtra/releases), ¡y listo!
@@ -34,7 +34,7 @@ Usa un endpoint antiguo de Wuolah, por ahora da buenos resultados.
 #### PDFLib (_pdflib_)
 ⚠️ Sin terminar
 
-Usa el paquete `pdf-lib`, por ahora solo quita la primera página 
+Usa el paquete `pdf-lib`, por ahora solo quita la primera página
 
 #### Ninguno (_none_)
 Deshabilita la eliminación de anuncios
@@ -60,8 +60,8 @@ yarn build
 
 ## TODO
 * Para los métodos GULAG / PDFLib
-    * Eliminar los anuncios de los pdfs contenidos en los zips
-    * Encontrar la forma de sacar el nombre original del archivo
+  * Eliminar los anuncios de los pdfs contenidos en los zips
+  * Encontrar la forma de sacar el nombre original del archivo
 
 ## Créditos
 * [GM_Config](https://github.com/sizzlemctwizzle/GM_config) | [LICENSE](https://github.com/sizzlemctwizzle/GM_config/blob/master/LICENSE)

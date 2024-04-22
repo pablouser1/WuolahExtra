@@ -1,13 +1,10 @@
-import { GM } from '$';
-import c from './config';
-import clean_ui from './styles/clean_ui.scss?inline'
+import clean_ui from './styles/clean_ui.scss'
 
 export const addOptions = () => {
   // Config
   GM.registerMenuCommand(
     "Configuración",
-    () => c().open(),
-    'c'
+    () => GM_config.open()
   );
 }
 

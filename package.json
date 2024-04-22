@@ -1,22 +1,30 @@
 {
   "name": "wuolahextra",
+  "displayName": "WuolahExtra",
   "description": "UserScript para Wuolah",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "homepage": "https://github.com/pablouser1/WuolahExtra",
   "license": "MIT",
   "author": "Pablo Ferreiro",
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "rollup --watch --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "build": "rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript"
   },
   "devDependencies": {
-    "sass": "^1.70.0",
-    "typescript": "^5.3.3",
-    "vite": "^5.0.11",
-    "vite-plugin-monkey": "^3.5.1"
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20.12.7",
+    "@violentmonkey/types": "^0.1.7",
+    "rollup": "^4.14.3",
+    "rollup-plugin-external-globals": "^0.10.0",
+    "rollup-plugin-sass": "^1.12.22",
+    "rollup-plugin-serve": "^3.0.0",
+    "rollup-plugin-userscript-metablock": "^0.3.3",
+    "sass": "^1.75.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "gulagcleaner_wasm": "^0.12.2",
