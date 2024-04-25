@@ -21,23 +21,12 @@ Puedes acceder a la configuración del script desde tu gestor de userscripts en 
 Muestra información para desarrolladores en la consola
 
 ### Métodos de limpieza de PDFs
-#### GulagCleaner (_gulag_)
-✅ Buen funcionamiento, activado por defecto
-
-Internamente usa el paquete `gulagcleaner_wasm`.
-
-#### Wuolah Params (_params_)
-⚠️ Puede ser eliminado en cualquier momento
-
-Usa un endpoint antiguo de Wuolah, por ahora da buenos resultados.
-
-#### PDFLib (_pdflib_)
-⚠️ Sin terminar
-
-Usa el paquete `pdf-lib`, por ahora solo quita la primera página
-
-#### Ninguno (_none_)
-Deshabilita la eliminación de anuncios
+| Método | Estado | Detalles | Config ID | + info |
+| :--: | :--: | :--: | :--: | :--: |
+| GulagCleaner | ✅ | **Activado por defecto**, buenos resultados | gulag | [Source](https://github.com/YM162/gulagcleaner) |
+| Params | ⚠️ | Puede ser eliminado por Wuolah en cualquier momento, por ahora buenos resultados | params | - |
+| PDFLib | ❌ | En desarrollo | pdflib | [Source](https://github.com/Hopding/pdf-lib)
+| Ninguno | - | Deshabilita todos los sitemas de eliminación de anuncios | none | -
 
 ### Limpiar UI
 Elimina elementos de la interfaz como patrocinios, enlaces sociales...
