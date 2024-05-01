@@ -1,5 +1,6 @@
 import { initSync } from "gulagcleaner_wasm"
 import Log from "../constants/Log"
+import { PDFDocument } from 'pdf-lib';
 
 export default class Misc {
   private static logValues = Object.values(Log)
@@ -35,6 +36,21 @@ export default class Misc {
       header += b.toString(16);
     }
     return header === '255044462d'; // PDF header
+  }
+
+  static async extractPDFName(pdfBuffer : ArrayBuffer) {
+    try {
+      // Load the PDF from the buffer
+      const pdfDoc = await PDFDocument.load(pdfBuffer);
+            
+      // Extract the title from the metadata
+      const title = pdfDoc.getTitle() ?? 'Untitled';
+      
+      return title;
+    } catch (error) {
+      console.error('Error extracting PDF metadata:', error);
+      throw error;
+    }
   }
 
   static async initGulag(): Promise<void> {
