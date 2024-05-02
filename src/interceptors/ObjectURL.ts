@@ -10,11 +10,11 @@ const { createObjectURL: origcreateObjectURL } = window.URL
  * Wrapper para abrir un Blob
  * @param obj Blob ya listo para descargar
  */
-const openBlob = (obj: Blob, filename: string): void => {
+const openBlob = (obj: Blob, filename: string = ''): void => {
   const url = origcreateObjectURL(obj)
   const a = document.createElement('a')
   a.setAttribute("href", url)
-  if (filename != '') a.setAttribute("download", filename)
+  if (filename !== '') a.setAttribute("download", filename)
   a.setAttribute("target", "_blank")
   a.click()
 }
@@ -49,7 +49,7 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
   // Conseguimos los datos y vemos si los headers son los de un pdf
   obj.arrayBuffer().then(async (buf) => {
     if (!Misc.isPdf(buf)) {
-      openBlob(obj, '')
+      openBlob(obj)
       return
     }
 
