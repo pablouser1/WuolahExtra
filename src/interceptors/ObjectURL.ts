@@ -10,10 +10,11 @@ const { createObjectURL: origcreateObjectURL } = window.URL
  * Wrapper para abrir un Blob
  * @param obj Blob ya listo para descargar
  */
-const openBlob = (obj: Blob): void => {
+const openBlob = (obj: Blob, filename: string = ''): void => {
   const url = origcreateObjectURL(obj)
   const a = document.createElement('a')
   a.setAttribute("href", url)
+  if (filename !== '') a.setAttribute("download", filename)
   a.setAttribute("target", "_blank")
   a.click()
 }
@@ -52,6 +53,8 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
       return
     }
 
+    const title = Misc.extractPDFName(buf)
+
     Misc.log('Limpiando documento', Log.INFO)
 
     // Elegimos método de limpieza
@@ -71,7 +74,7 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
 
     // Nuevo blob y abrimos
     const newBlob = new Blob([data], { type: "application/pdf" });
-    openBlob(newBlob)
+    openBlob(newBlob, await title)
   })
 
   return "javascript:void(0)" // Evitamos que se abra la version sin limpiar
