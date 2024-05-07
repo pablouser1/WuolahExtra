@@ -14,7 +14,7 @@ assignees: ''
 **Setup**
 Nombre y versión del navegador (Ej: Firefox 122, Chrome 100): **(ESCRIBE AQUÍ)**
 Nombre y versión del userscript (Ej: ViolentMonkey 2.18.0, Tampermonkey 5.0.1): **(ESCRIBE AQUÍ)**
-Método de limpieza usado, si es necesario: (Ej: gulag, params...): **(ESCRIBE AQUÍ)**
+Método de limpieza usado, si es necesario: (Ej: gulag, pdflib...): **(ESCRIBE AQUÍ)**
 
 **Describe el fallo**
 Da una descripción del problema, explicando cómo has llegado hasta ahí.

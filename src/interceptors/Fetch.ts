@@ -20,15 +20,9 @@ export default class FetchHook {
   }
 
   async entrypoint(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
-    // los strings en js son inmutables,
-    // convertimos a url para poder modificarlos más adelante
-    if (typeof input === "string" && input.includes("/v2/download")) {
-      input = new URL(input);
-    }
-
-    this.beforeHandler(input, init)
-    const res = await origFetch(input, init)
-    this.afterHandler(res)
+    this.beforeHandler(input, init) // Before hook
+    const res = await origFetch(input, init) // Send request
+    this.afterHandler(res) // After hook
     return res
   }
 

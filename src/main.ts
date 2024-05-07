@@ -35,7 +35,7 @@ GM_config.init({
     clean_ui: {
       type: 'checkbox',
       label: 'Limpia distracciones en la interfaz',
-      default: false
+      default: true
     },
     no_analytics: {
       type: 'checkbox',

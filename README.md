@@ -24,7 +24,6 @@ Muestra información para desarrolladores en la consola
 | Método | Estado | Detalles | Config ID | + info |
 | :--: | :--: | :--: | :--: | :--: |
 | GulagCleaner | ✅ | **Activado por defecto**, buenos resultados | gulag | [Source](https://github.com/YM162/gulagcleaner) |
-| Params | ⚠️ | Puede ser eliminado por Wuolah en cualquier momento, por ahora buenos resultados | params | - |
 | PDFLib | ❌ | En desarrollo | pdflib | [Source](https://github.com/Hopding/pdf-lib)
 | Ninguno | - | Deshabilita todos los sitemas de eliminación de anuncios | none | -
 
