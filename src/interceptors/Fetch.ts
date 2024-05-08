@@ -1,7 +1,6 @@
 import Misc from "../helpers/Misc";
+import { origFetch } from "../originals";
 import { HookAfter, HookBefore, HookCommon, HookConfig } from "../types/Hooks";
-
-const { fetch: origFetch } = window
 
 export default class FetchHook {
   debug: boolean = false

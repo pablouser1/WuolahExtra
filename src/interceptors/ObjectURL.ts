@@ -1,45 +1,7 @@
-import { PDFDocument } from 'pdf-lib'
-import ClearMethods from '../constants/ClearMethods'
 import Log from '../constants/Log'
+import handlePDF, { openBlob } from '../helpers/Cleaner'
 import Misc from '../helpers/Misc'
-import { clean_pdf } from 'gulagcleaner_wasm'
-
-const { createObjectURL: origcreateObjectURL } = window.URL
-
-/**
- * Wrapper para abrir un Blob
- * @param obj Blob ya listo para descargar
- */
-const openBlob = (obj: Blob, filename: string = ''): void => {
-  const url = origcreateObjectURL(obj)
-  const a = document.createElement('a')
-  a.setAttribute("href", url)
-  if (filename !== '') a.setAttribute("download", filename)
-  a.setAttribute("target", "_blank")
-  a.click()
-}
-
-/**
- * Limpia el documento usando el método GulagCleaner
- * @param buf Buffer de documento sin limpiar
- */
-const clearGulag = (buf: ArrayBuffer): BlobPart => {
-  return clean_pdf(new Uint8Array(buf), false)
-}
-
-/**
- * Limpia el documento usando el método PDFLib
- * @param buf Buffer de documento sin limpiar
- * @todo Limpiar todo correctamente
- */
-const clearPDFLib = async (buf: ArrayBuffer): Promise<BlobPart> => {
-  const doc = await PDFDocument.load(buf)
-  // Spam primera página
-  doc.removePage(0)
-  // Guardar
-  const data = await doc.save()
-  return data
-}
+import { origcreateObjectURL } from '../originals'
 
 const objectURLWrapper = (obj: Blob | MediaSource): string => {
   if (!(obj instanceof Blob && obj.type === "application/octet-stream")) {
@@ -57,20 +19,7 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
 
     Misc.log('Limpiando documento', Log.INFO)
 
-    // Elegimos método de limpieza
-    let data: BlobPart
-    const clearMethod = GM_config.get("clear_pdf").toString()
-    switch (clearMethod) {
-      case ClearMethods.PDFLIB:
-        data = await clearPDFLib(buf)
-        break
-      case ClearMethods.GULAG:
-        data = clearGulag(buf)
-        break
-      default:
-        alert("Invalid clear method! Fallback to original pdf")
-        data = buf
-    }
+    const data = await handlePDF(buf)
 
     // Nuevo blob y abrimos
     const newBlob = new Blob([data], { type: "application/pdf" });

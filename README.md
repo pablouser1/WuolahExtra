@@ -6,7 +6,7 @@ Para usar este programa necesitas un gestor de userscripts (por ejemplo, [Violen
 ## Funciones implementadas
 * Quita anuncios de los pdfs
 * Client-side PRO
-  * Puedes descargar carpetas como zips (ACTUALMENTE ROTO)
+  * Puedes descargar carpetas dando un click (EN DESARROLLO)
 * Limpiar partes de la interfaz innecesarias
   * Publicidad en el fondo
   * Vídeos antes de descargar

@@ -41,6 +41,12 @@ GM_config.init({
       type: 'checkbox',
       label: 'Desactivar analíticas',
       default: true
+    },
+    folder_download: {
+      type: 'checkbox',
+      label: "[EXPERIMENTAL] Descargar carpeta",
+      title: "¡Esta función aún está en desarrollo!",
+      default: false
     }
   },
   events: {
