@@ -64,7 +64,7 @@ export default class FetchWrapper {
   }
 
   /**
-   *
+   * Comprueba si el path actual forma parte de un hook y si la condición se cumple
    * @param item Hook actual
    * @param path Path de la URL
    * @returns Bool, true si el endpoint coincide y la condición (si hay) es true
