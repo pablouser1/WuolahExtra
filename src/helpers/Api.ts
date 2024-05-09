@@ -13,9 +13,9 @@ export default class Api {
   static TOKEN_KEY = "token";
 
   /**
-   * Get all documents from a folder
-   * @param id Folder id
-   * @returns All documents linked to the folder
+   * Lista todos los documentos de una carpeta
+   * @param id Id carpeta
+   * @returns Todos los documentos pertenecientes a la carpeta
    */
   static async folder(id: number): Promise<Doc[]> {
     const params = new URLSearchParams();
@@ -24,11 +24,19 @@ export default class Api {
     params.append("pagination[pageSize]", "9999");
     params.append("pagination[withCount]", "false");
 
-    const res = await origFetch(`${Api.BASE_URL}/documents?${params.toString()}`, Api._buildInit());
+    const res = await origFetch(
+      `${Api.BASE_URL}/documents?${params.toString()}`,
+      Api._buildInit()
+    );
     const json: ApiRes<Doc[]> = await res.json();
     return json.data;
   }
 
+  /**
+   * Consigue URL del documento a partir de su ID
+   * @param id Id documento
+   * @returns Url para descargar documento
+   */
   static async docUrl(id: number): Promise<string | null> {
     const body: DownloadBody = {
       adblockDetected: false,
@@ -45,14 +53,14 @@ export default class Api {
       ubication2ExpectedPubs: 0,
       ubication2RequestedPubs: 0,
       ubication3ExpectedPubs: 0,
-      ubication3RequestedPubs: 0
+      ubication3RequestedPubs: 0,
     };
 
     const bodyStr = JSON.stringify(body);
     const res = await origFetch(`${Api.BASE_URL}/download`, {
       method: "POST",
       body: bodyStr,
-      ...Api._buildInit()
+      ...Api._buildInit(),
     });
 
     if (!res.ok) {
@@ -63,6 +71,11 @@ export default class Api {
     return data.url;
   }
 
+  /**
+   * Descarga un documento
+   * @param url Url del documento
+   * @returns Documento ya descargado como `ArrayBuffer`
+   */
   static async docData(url: string): Promise<ArrayBuffer> {
     const res = await origFetch(url);
     const buf = await res.arrayBuffer();
@@ -76,8 +89,8 @@ export default class Api {
   private static _buildInit(): RequestInit {
     return {
       headers: {
-        Authorization: `Bearer ${Api._getToken()}`
-      }
+        Authorization: `Bearer ${Api._getToken()}`,
+      },
     };
   }
 }

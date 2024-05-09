@@ -1,8 +1,6 @@
 {
   "namespace": "Violentmonkey Scripts",
-  "match": [
-    "https://wuolah.com/*"
-  ],
+  "match": ["https://wuolah.com/*"],
   "grant": [
     "GM_getValue",
     "GM_setValue",

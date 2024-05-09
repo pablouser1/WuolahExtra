@@ -1,16 +1,16 @@
 import externalGlobals from "rollup-plugin-external-globals";
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import typescript from "@rollup/plugin-typescript";
 // @ts-expect-error dependency typing not configed properly
-import serve from 'rollup-plugin-serve';
-import sass from 'rollup-plugin-sass';
+import serve from "rollup-plugin-serve";
+import sass from "rollup-plugin-sass";
 import type { Plugin, RollupOptions } from "rollup";
-import getMetablock from './meta';
+import getMetablock from "./meta";
 
 // Map package name -> Global window name
 export const EXTERNAL_GLOBALS = {
-  "pdf-lib": "PDFLib"
-}
+  "pdf-lib": "PDFLib",
+};
 
 const isProduction = !process.env.ROLLUP_WATCH;
 
@@ -19,27 +19,29 @@ const plugins: Plugin[] = [
   externalGlobals(EXTERNAL_GLOBALS),
   nodeResolve(),
   sass(),
-  typescript()
-]
+  typescript(),
+];
 
 if (!isProduction) {
-  plugins.push(serve({
-    contentBase: ['dist'],
-    headers: {
-      'Cache-Control': 'public, max-age=5'
-    }
-  }))
+  plugins.push(
+    serve({
+      contentBase: ["dist"],
+      headers: {
+        "Cache-Control": "public, max-age=5",
+      },
+    })
+  );
 }
 
 const config: RollupOptions = {
-  input: 'src/main.ts',
+  input: "src/main.ts",
   output: {
     file: "dist/WuolahExtra.user.js",
     format: "esm",
     // Sourcemaps only for development
-    sourcemap: isProduction ? false : 'inline'
+    sourcemap: isProduction ? false : "inline",
   },
-  plugins
-}
+  plugins,
+};
 
-export default config
+export default config;

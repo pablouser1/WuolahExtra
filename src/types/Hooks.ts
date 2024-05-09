@@ -1,18 +1,18 @@
 export interface HookCommon {
-  id: string
-  endpoint: RegExp,
-  cond?: () => FieldValue
+  id: string;
+  endpoint: RegExp;
+  cond?: () => FieldValue;
 }
 
 export interface HookBefore extends HookCommon {
-  func: (input: RequestInfo | URL, init?: RequestInit) => void
+  func: (input: RequestInfo | URL, init?: RequestInit) => void;
 }
 
 export interface HookAfter extends HookCommon {
-  func: (res: Response) => void
+  func: (res: Response) => void;
 }
 
 export interface HookConfig {
-  before?: HookBefore[]
-  after?: HookAfter[]
+  before?: HookBefore[];
+  after?: HookAfter[];
 }

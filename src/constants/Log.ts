@@ -1,5 +1,10 @@
+/**
+ * Modos de Logging
+ */
 enum Log {
-  DEBUG, INFO
+  DEBUG,
+  INFO,
+  ERROR,
 }
 
-export default Log
+export default Log;
