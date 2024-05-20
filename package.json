@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "gulagcleaner_wasm": "^0.12.2",
-    "pdf-lib": "^1.17.1"
+    "pdf-lib": "^1.17.1",
+    "jszip": "2.6.1"
   }
 }
