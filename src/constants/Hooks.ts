@@ -92,6 +92,7 @@ export default class Hooks {
    * @todo Gestionar captchas
    */
   static folderDownload(res: Response) {
+    var zip2 = new JSZip();
     const url = res.url;
     const id = parseInt(url.substring(url.lastIndexOf("/") + 1));
 
@@ -121,13 +122,20 @@ export default class Hooks {
           }
 
           const blob = new Blob([buf], options);
-          openBlob(blob, doc.name);
+          zip2.file(await title, buf, {binary: true})
           i++;
         } else {
           failed = true;
           alert(`No se pudo descargar el archivo ${doc.name}, ¿quizás es un problema de captcha? Se ha interrumpido la descarga de la carpeta`);
         }
       }
+      const a = document.createElement('a');
+            a.setAttribute("target", "_blank");
+            a.click();
+            a.href = "data:application/zip;base64," + zip2.generate();
+            a.download = id;
+            a.click();
+            a.remove();
     });
   }
 }
