@@ -60,6 +60,9 @@ const handlePDF = async (origData: ArrayBuffer): Promise<ArrayBuffer> => {
     case ClearMethods.GULAG:
       data = clearGulag(origData);
       break;
+    case ClearMethods.NONE:
+      data = origData;
+      break;
     default:
       alert("Invalid clear method! Fallback to original pdf");
       data = origData;

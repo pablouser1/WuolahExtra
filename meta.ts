@@ -12,6 +12,7 @@ const PKG_RESOURCES = {
 // Requiered js files from npm
 const PKG_REQS = {
   "pdf-lib": "dist/pdf-lib.min.js",
+  "jszip": "dist/jszip.min.js"
 };
 
 // Static required js files

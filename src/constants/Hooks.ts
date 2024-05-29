@@ -2,7 +2,8 @@ import Api from "../helpers/Api";
 import Misc from "../helpers/Misc";
 import { HookAfter, HookBefore } from "../types/Hooks";
 import Log from "./Log";
-import handlePDF, { openBlob } from "../helpers/Cleaner";
+import handlePDF from "../helpers/Cleaner";
+import JSZip from "jszip";
 
 /**
  * Hooks de Fetch
@@ -92,7 +93,7 @@ export default class Hooks {
    * @todo Gestionar captchas
    */
   static folderDownload(res: Response) {
-    var zip2 = new JSZip();
+    const zip = new JSZip();
     const url = res.url;
     const id = parseInt(url.substring(url.lastIndexOf("/") + 1));
 
@@ -112,30 +113,28 @@ export default class Hooks {
 
         if (url !== null) {
           let buf = await Api.docData(url);
-          let options: BlobPropertyBag | undefined = undefined;
 
           if (doc.fileType === "application/pdf") {
             buf = await handlePDF(buf);
-            options = {
-              type: "application/pdf",
-            };
           }
 
-          const blob = new Blob([buf], options);
-          zip2.file(await title, buf, {binary: true})
+          zip.file(doc.name, buf, {binary: true})
           i++;
         } else {
           failed = true;
           alert(`No se pudo descargar el archivo ${doc.name}, ¿quizás es un problema de captcha? Se ha interrumpido la descarga de la carpeta`);
         }
       }
-      const a = document.createElement('a');
-            a.setAttribute("target", "_blank");
-            a.click();
-            a.href = "data:application/zip;base64," + zip2.generate();
-            a.download = id;
-            a.click();
-            a.remove();
+
+      zip.generateAsync({ type: "base64" }).then(bs64 => {
+        const a = document.createElement('a');
+        a.href = "data:application/zip;base64," + bs64;
+        a.setAttribute("download", `${id}.zip`);
+        a.click();
+        a.remove();
+      }).catch(err => {
+        Misc.log(err, Log.ERROR);
+      })
     });
   }
 }

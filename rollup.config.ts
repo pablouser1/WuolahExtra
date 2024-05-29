@@ -10,6 +10,7 @@ import getMetablock from "./meta";
 // Map package name -> Global window name
 export const EXTERNAL_GLOBALS = {
   "pdf-lib": "PDFLib",
+  "jszip": "JSZip"
 };
 
 const isProduction = !process.env.ROLLUP_WATCH;
