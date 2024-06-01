@@ -27,7 +27,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "gulagcleaner_wasm": "^0.12.2",
+    "gulagcleaner_wasm": "^0.14.1",
     "jszip": "3.9.1",
     "pdf-lib": "^1.17.1"
   }
