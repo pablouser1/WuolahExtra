@@ -31,6 +31,12 @@ export default class Hooks {
       func: Hooks.makePro,
     },
     {
+      id: "force-dark",
+      endpoint: /^\/v2\/user-preferences\/me$/,
+      func: Hooks.forceDark,
+      cond: () => GM_config.get("force_dark"),
+    },
+    {
       id: "no-ui-ads",
       endpoint: /^\/v2\/a-d-s$/,
       func: Hooks.noUiAds,
@@ -59,7 +65,9 @@ export default class Hooks {
 
   // -- After -- //
   /**
-   * Reemplaza solicitud de /me y hacer al usuario pro
+   * Reemplaza solicitud de /me
+   *
+   * Hace usuario PRO y le da suscripción PRO+
    */
   static makePro(res: Response) {
     if (res.ok) {
@@ -68,7 +76,26 @@ export default class Hooks {
         res
           .clone()
           .json()
-          .then((d) => ({ ...d, isPro: true }));
+          .then((d) => ({ ...d, isPro: true, subscriptionId: "prod_OiP9d4lmwvm0Ba", subscriptionTier: "tier_3", verifiedSubscriptionTier: true }));
+      res.json = json;
+    }
+  }
+
+  /**
+   * Fuerza modo oscuro en el nuevo frontend de Wuolah
+   */
+  static forceDark(res: Response) {
+    if (res.ok) {
+      Misc.log("Forzando tema oscuro", Log.INFO);
+      const json = () =>
+        res
+          .clone()
+          .json()
+          .then((d) => ({
+            ...d, item: {
+              theme: "wuolah-theme-dark"
+            }
+          }));
       res.json = json;
     }
   }
@@ -118,7 +145,7 @@ export default class Hooks {
             buf = await handlePDF(buf);
           }
 
-          zip.file(doc.name, buf, {binary: true})
+          zip.file(doc.name, buf, { binary: true })
           i++;
         } else {
           failed = true;

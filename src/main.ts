@@ -43,12 +43,17 @@ GM_config.init({
       label: "Desactivar analíticas",
       default: true,
     },
+    force_dark: {
+      type: "checkbox",
+      label: "Forzar modo oscuro",
+      default: false,
+    },
     folder_download: {
       type: "checkbox",
       label: "[EXPERIMENTAL] Descargar carpeta",
       title: "¡Esta función aún está en desarrollo!",
       default: false,
-    },
+    }
   },
   events: {
     init: () => {
