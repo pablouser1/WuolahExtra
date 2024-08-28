@@ -1,9 +1,9 @@
 import metablock from "rollup-plugin-userscript-metablock";
 import type { Plugin } from "rollup";
-import pkg from "./package.json" assert { type: "json" };
 import { readFileSync } from "fs";
 import { join } from "path";
 
+const pkg = JSON.parse(readFileSync('package.json').toString("utf-8"));
 // Required external resources from npm
 const PKG_RESOURCES = {
   gulagcleaner_wasm: "gulagcleaner_wasm_bg.wasm",

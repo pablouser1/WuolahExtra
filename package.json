@@ -15,16 +15,16 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.6",
-    "@types/node": "^20.12.7",
+    "@types/node": "^22.5.1",
     "@violentmonkey/types": "^0.1.9",
-    "rollup": "^4.14.3",
-    "rollup-plugin-external-globals": "^0.10.0",
-    "rollup-plugin-sass": "^1.12.22",
-    "rollup-plugin-serve": "^3.0.0",
+    "rollup": "^4.21.1",
+    "rollup-plugin-external-globals": "^0.12.0",
+    "rollup-plugin-sass": "^1.13.2",
+    "rollup-plugin-serve": "^1.1.1",
     "rollup-plugin-userscript-metablock": "^0.4.2",
-    "sass": "^1.75.0",
-    "tslib": "^2.6.2",
-    "typescript": "^5.4.5"
+    "sass": "^1.77.8",
+    "tslib": "^2.7.0",
+    "typescript": "^5.5.4"
   },
   "dependencies": {
     "gulagcleaner_wasm": "^0.14.1",
