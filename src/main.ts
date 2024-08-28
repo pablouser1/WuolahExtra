@@ -1,4 +1,4 @@
-import Hooks from "./constants/Hooks";
+import Hooks from "./wrappers/Hooks";
 import Log from "./constants/Log";
 import Misc from "./helpers/Misc";
 import FetchWrapper from "./wrappers/Fetch";

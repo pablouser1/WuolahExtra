@@ -55,7 +55,7 @@ const getRequires = (): string[] => {
 
 const getMetablock = (): Plugin => {
   return metablock({
-    file: "./meta.json",
+    file: "meta.json",
     override: {
       name: pkg.displayName,
       version: pkg.version,

@@ -31,11 +31,11 @@ export default class FetchWrapper {
     return res;
   }
 
-  setDebug(debug: boolean) {
+  setDebug(debug: boolean): void {
     this.debug = debug;
   }
 
-  private beforeHandler(input: RequestInfo | URL, init?: RequestInit) {
+  private beforeHandler(input: RequestInfo | URL, init?: RequestInit): void {
     const path = Misc.getPath(input.toString());
     const h = this.before.find((item) => this._finder(item, path));
     if (h !== undefined) {
@@ -49,7 +49,7 @@ export default class FetchWrapper {
     }
   }
 
-  private afterHandler(res: Response) {
+  private afterHandler(res: Response): void {
     const path = Misc.getPath(res.url);
     const h = this.after.find((item) => this._finder(item, path));
     if (h !== undefined) {
@@ -67,7 +67,7 @@ export default class FetchWrapper {
    * Comprueba si el path actual forma parte de un hook y si la condición se cumple
    * @param item Hook actual
    * @param path Path de la URL
-   * @returns Bool, true si el endpoint coincide y la condición (si hay) es true
+   * @returns Bool, `true` si el endpoint coincide y la condición (si hay) es true
    */
   private _finder(item: HookCommon, path: string): FieldValue {
     const found = item.endpoint.test(path);

@@ -1,7 +1,7 @@
 import Api from "../helpers/Api";
 import Misc from "../helpers/Misc";
 import { HookAfter, HookBefore } from "../types/Hooks";
-import Log from "./Log";
+import Log from "../constants/Log";
 import handlePDF from "../helpers/Cleaner";
 import JSZip from "jszip";
 
