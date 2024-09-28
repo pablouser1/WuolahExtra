@@ -255,10 +255,10 @@ glob-parent@~5.1.2:
   dependencies:
     is-glob "^4.0.1"
 
-gulagcleaner_wasm@^0.14.2:
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/gulagcleaner_wasm/-/gulagcleaner_wasm-0.14.2.tgz#08f34a6a4860b2755a1e17e7df59b2817ae474a6"
-  integrity sha512-fhl/ws37KSm7BK+VldaL5jClDMkCbc6V3atlRM8rB5dCQvU9/L1XmGKYMyzRyHPc+U9CqC5F5JUAj1dVWt3enw==
+gulagcleaner_wasm@^0.14.4:
+  version "0.14.4"
+  resolved "https://registry.yarnpkg.com/gulagcleaner_wasm/-/gulagcleaner_wasm-0.14.4.tgz#bce409a474aee65db8be874826b89a44925328d8"
+  integrity sha512-dz6UySs8HAKRb0t4woLql8bN/md/zCjdiBbthEbpYUsGuzCfmFnz9R7D8BnZ3ozjOvHNyM5X9SNOhYbomXHvag==
 
 hasown@^2.0.0:
   version "2.0.2"
