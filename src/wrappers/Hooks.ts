@@ -153,15 +153,17 @@ export default class Hooks {
         }
       }
 
-      zip.generateAsync({ type: "base64" }).then(bs64 => {
-        const a = document.createElement('a');
-        a.href = "data:application/zip;base64," + bs64;
-        a.setAttribute("download", `${id}.zip`);
-        a.click();
-        a.remove();
-      }).catch(err => {
-        Misc.log(err, Log.ERROR);
-      })
+      if (!failed) {
+        zip.generateAsync({ type: "base64" }).then(bs64 => {
+          const a = document.createElement('a');
+          a.href = "data:application/zip;base64," + bs64;
+          a.setAttribute("download", `${id}.zip`);
+          a.click();
+          a.remove();
+        }).catch(err => {
+          Misc.log(err, Log.ERROR);
+        })
+      }
     });
   }
 }

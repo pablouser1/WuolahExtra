@@ -10,6 +10,7 @@ Para usar este programa necesitas un gestor de userscripts (por ejemplo, [Violen
 * Limpiar partes de la interfaz innecesarias
   * Publicidad en el fondo
   * Vídeos antes de descargar
+* Forzar modo oscuro
 
 ## Instalación
 Una vez hayas descargado tu gestor de userscripts, descarga el script desde la sección de [Releases](https://github.com/pablouser1/WuolahExtra/releases), ¡y listo!
