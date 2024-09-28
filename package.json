@@ -2,7 +2,7 @@
   "name": "wuolahextra",
   "displayName": "WuolahExtra",
   "description": "UserScript para Wuolah",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "homepage": "https://github.com/pablouser1/WuolahExtra",
   "license": "MIT",
   "author": "Pablo Ferreiro",
@@ -27,7 +27,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "gulagcleaner_wasm": "^0.14.1",
+    "gulagcleaner_wasm": "^0.14.2",
     "jszip": "3.9.1",
     "pdf-lib": "^1.17.1"
   }
