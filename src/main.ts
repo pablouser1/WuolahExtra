@@ -2,7 +2,7 @@ import Hooks from "./wrappers/Hooks";
 import Log from "./constants/Log";
 import Misc from "./helpers/Misc";
 import FetchWrapper from "./wrappers/Fetch";
-import { addOptions, cleanUI } from "./ui";
+import { addOptions } from "./ui";
 import ClearMethods from "./constants/ClearMethods";
 import objectURLWrapper from "./wrappers/ObjectURL";
 

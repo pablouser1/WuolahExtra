@@ -5,7 +5,6 @@
     "GM_getValue",
     "GM_setValue",
     "GM.registerMenuCommand",
-    "GM.addStyle",
     "GM.getResourceUrl",
     "unsafeWindow"
   ],
