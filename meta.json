@@ -2,8 +2,8 @@
   "namespace": "Violentmonkey Scripts",
   "match": ["https://wuolah.com/*"],
   "grant": [
-    "GM_getValue",
-    "GM_setValue",
+    "GM.getValue",
+    "GM.setValue",
     "GM.registerMenuCommand",
     "GM.getResourceUrl",
     "unsafeWindow"
