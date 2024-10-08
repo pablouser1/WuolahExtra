@@ -81,7 +81,9 @@ export default class Misc {
     const url = await GM.getResourceUrl("gulagcleaner_wasm");
     const res = await fetch(url);
     const buf = await res.arrayBuffer();
-    initSync(buf);
+    initSync({
+      module: buf
+    });
   }
 
   /**

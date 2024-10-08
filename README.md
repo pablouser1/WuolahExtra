@@ -51,6 +51,7 @@ yarn build
 * Para los métodos GULAG / PDFLib
   * Eliminar los anuncios de los pdfs contenidos en los zips
   * Encontrar la forma de sacar el nombre original del archivo
+* Eliminar dependencia `GM_config` e implementar la configuración usando exclusivamente `GM.getValue` y `GM.setValue`
 
 ## Créditos
 * [GM_Config](https://github.com/sizzlemctwizzle/GM_config) | [LICENSE](https://github.com/sizzlemctwizzle/GM_config/blob/master/LICENSE)
