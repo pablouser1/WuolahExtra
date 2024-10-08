@@ -70,12 +70,6 @@ GM_config.init({
         unsafeWindow.URL.createObjectURL = objectURLWrapper;
       }
 
-      // Inyectar css
-      if (GM_config.get("clean_ui")) {
-        Misc.log("Injecting CSS", Log.DEBUG);
-        cleanUI();
-      }
-
       // Init wasm para Gulag
       if (clearMethod === ClearMethods.GULAG) {
         Misc.initGulag();
