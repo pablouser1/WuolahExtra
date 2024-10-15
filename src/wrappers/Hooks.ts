@@ -48,6 +48,12 @@ export default class Hooks {
       func: Hooks.folderDownload,
       cond: () => GM_config.get("folder_download"),
     },
+    {
+      id: "clean-aside",
+      endpoint: /\/v2\/communities\/.*\/subjects/,
+      func: Hooks.cleanAside,
+      cond: () => true, //TODO add config
+    },
   ];
 
   // -- Before -- //
@@ -76,7 +82,13 @@ export default class Hooks {
         res
           .clone()
           .json()
-          .then((d) => ({ ...d, isPro: true, subscriptionId: "prod_OiP9d4lmwvm0Ba", subscriptionTier: "tier_3", verifiedSubscriptionTier: true }));
+          .then((d) => ({
+            ...d,
+            isPro: true,
+            subscriptionId: "prod_OiP9d4lmwvm0Ba",
+            subscriptionTier: "tier_3",
+            verifiedSubscriptionTier: true,
+          }));
       res.json = json;
     }
   }
@@ -92,9 +104,10 @@ export default class Hooks {
           .clone()
           .json()
           .then((d) => ({
-            ...d, item: {
-              theme: "wuolah-theme-dark"
-            }
+            ...d,
+            item: {
+              theme: "wuolah-theme-dark",
+            },
           }));
       res.json = json;
     }
@@ -145,25 +158,49 @@ export default class Hooks {
             buf = await handlePDF(buf);
           }
 
-          zip.file(doc.name, buf, { binary: true })
+          zip.file(doc.name, buf, { binary: true });
           i++;
         } else {
           failed = true;
-          alert(`No se pudo descargar el archivo ${doc.name}, ¿quizás es un problema de captcha? Se ha interrumpido la descarga de la carpeta`);
+          alert(
+            `No se pudo descargar el archivo ${doc.name}, ¿quizás es un problema de captcha? Se ha interrumpido la descarga de la carpeta`
+          );
         }
       }
 
       if (!failed) {
-        zip.generateAsync({ type: "base64" }).then(bs64 => {
-          const a = document.createElement('a');
-          a.href = "data:application/zip;base64," + bs64;
-          a.setAttribute("download", `${id}.zip`);
-          a.click();
-          a.remove();
-        }).catch(err => {
-          Misc.log(err, Log.ERROR);
-        })
+        zip
+          .generateAsync({ type: "base64" })
+          .then((bs64) => {
+            const a = document.createElement("a");
+            a.href = "data:application/zip;base64," + bs64;
+            a.setAttribute("download", `${id}.zip`);
+            a.click();
+            a.remove();
+          })
+          .catch((err) => {
+            Misc.log(err, Log.ERROR);
+          });
       }
     });
   }
+
+  /**
+   * Elimina la barra lateral
+   * @todo
+   */
+
+  static cleanAside(res: Response) {
+    removeElementsByClass("SupportingPaneLayout_supportingPane__hR__U");
+  }
+}
+
+function removeElementsByClass(className: string) {
+  // Find all elements with the specified class
+  const elements = document.querySelectorAll(`.${className}`);
+
+  // Loop through the NodeList and remove each element from the DOM
+  elements.forEach((element) => {
+    element.remove();
+  });
 }
