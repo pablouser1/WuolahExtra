@@ -17,8 +17,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version: "20"
+          cache: "yarn"
       - name: Install dependencies
         run: yarn install
       - name: Build script
@@ -26,7 +26,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "dist/WuolahExtra.user.js"
+          artifacts: "dist/ZenWuolah.user.js"
           artifactContentType: text/javascript
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: v${{ steps.package-version.outputs.current-version }}
