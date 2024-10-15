@@ -1,11 +1,11 @@
 {
-  "name": "wuolahextra",
-  "displayName": "WuolahExtra",
+  "name": "zenwuolah",
+  "displayName": "ZenWuolah",
   "description": "UserScript para Wuolah",
   "version": "1.5.6",
-  "homepage": "https://github.com/pablouser1/WuolahExtra",
+  "homepage": "https://github.com/PepeCoral/ZenWuolah",
   "license": "MIT",
-  "author": "Pablo Ferreiro",
+  "author": "Pepe Coral",
   "type": "module",
   "private": true,
   "scripts": {
