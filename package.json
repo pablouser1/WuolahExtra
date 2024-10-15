@@ -1,7 +1,7 @@
 {
   "name": "zenwuolah",
-  "displayName": "ZenWuolah",
-  "description": "UserScript para Wuolah",
+  "displayName": "Zen Wuolah",
+  "description": "Limpia Wuolah",
   "version": "1.5.6",
   "homepage": "https://github.com/PepeCoral/ZenWuolah",
   "license": "MIT",
@@ -28,5 +28,21 @@
     "gulagcleaner_wasm": "^0.14.8",
     "jszip": "3.9.1",
     "pdf-lib": "^1.17.1"
+  },
+  "contributors": [
+    {
+      "name": "Pablo Ferreiro",
+      "url": "https://github.com/pablouser1",
+      "role": "Original Author"
+    },
+    {
+      "name": "Pepe Coral",
+      "url": "https://github.com/pepecoral",
+      "role": "Zen Wuolah"
+    }
+  ],
+  "originalRepository": {
+    "type": "git",
+    "url": "git+https://github.com/pablouser1/WuolahExtra.git"
   }
 }
