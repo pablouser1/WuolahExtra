@@ -31,7 +31,7 @@ GM_config.init({
       type: "select",
       label: "Método de limpieza de PDF",
       options: Object.values(ClearMethods),
-      default: ClearMethods.NONE,
+      default: ClearMethods.GULAG,
     },
     clean_ui: {
       type: "checkbox",
