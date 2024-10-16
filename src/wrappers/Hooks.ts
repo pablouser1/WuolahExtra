@@ -34,7 +34,7 @@ export default class Hooks {
       id: "force-dark",
       endpoint: /^\/v2\/user-preferences\/me$/,
       func: Hooks.forceDark,
-      cond: () => GM_config.get("force_dark"),
+      cond: () => true,
     },
     {
       id: "no-ui-ads",
@@ -47,6 +47,18 @@ export default class Hooks {
       endpoint: /^\/v2\/group-downloads\/uploads/,
       func: Hooks.folderDownload,
       cond: () => GM_config.get("folder_download"),
+    },
+    {
+      id: "clean-aside",
+      endpoint: /\/v2\/rankings\/users/,
+      func: Hooks.cleanAside,
+      cond: () => GM_config.get("hide_aside"),
+    },
+    {
+      id: "clean-navbar",
+      endpoint: /^\/v2\/me/,
+      func: Hooks.cleanNavbar,
+      cond: () => GM_config.get("clean_navbar"),
     },
   ];
 
@@ -76,7 +88,13 @@ export default class Hooks {
         res
           .clone()
           .json()
-          .then((d) => ({ ...d, isPro: true, subscriptionId: "prod_OiP9d4lmwvm0Ba", subscriptionTier: "tier_3", verifiedSubscriptionTier: true }));
+          .then((d) => ({
+            ...d,
+            isPro: true,
+            subscriptionId: "prod_OiP9d4lmwvm0Ba",
+            subscriptionTier: "tier_3",
+            verifiedSubscriptionTier: true,
+          }));
       res.json = json;
     }
   }
@@ -92,9 +110,10 @@ export default class Hooks {
           .clone()
           .json()
           .then((d) => ({
-            ...d, item: {
-              theme: "wuolah-theme-dark"
-            }
+            ...d,
+            item: {
+              theme: "wuolah-theme-dark",
+            },
           }));
       res.json = json;
     }
@@ -145,25 +164,86 @@ export default class Hooks {
             buf = await handlePDF(buf);
           }
 
-          zip.file(doc.name, buf, { binary: true })
+          zip.file(doc.name, buf, { binary: true });
           i++;
         } else {
           failed = true;
-          alert(`No se pudo descargar el archivo ${doc.name}, ¿quizás es un problema de captcha? Se ha interrumpido la descarga de la carpeta`);
+          alert(
+            `No se pudo descargar el archivo ${doc.name}, ¿quizás es un problema de captcha? Se ha interrumpido la descarga de la carpeta`
+          );
         }
       }
 
       if (!failed) {
-        zip.generateAsync({ type: "base64" }).then(bs64 => {
-          const a = document.createElement('a');
-          a.href = "data:application/zip;base64," + bs64;
-          a.setAttribute("download", `${id}.zip`);
-          a.click();
-          a.remove();
-        }).catch(err => {
-          Misc.log(err, Log.ERROR);
-        })
+        zip
+          .generateAsync({ type: "base64" })
+          .then((bs64) => {
+            const a = document.createElement("a");
+            a.href = "data:application/zip;base64," + bs64;
+            a.setAttribute("download", `${id}.zip`);
+            a.click();
+            a.remove();
+          })
+          .catch((err) => {
+            Misc.log(err, Log.ERROR);
+          });
       }
     });
+  }
+
+  /**
+   * Elimina la barra lateral
+   * @todo
+   */
+
+  static cleanAside(res: Response) {
+    removeElementsByClass("SupportingPaneLayout_supportingPane__hR__U");
+    addCssByClass("SupportingPaneLayout_container__wvAa5", {
+      display: "block",
+      width: "750px",
+    });
+    addCssByClass("SupportingPaneLayout_main__nlLZa", {
+      width: "100%",
+    });
+  }
+
+  static cleanNavbar(res: Response) {
+    removeElementsWithParent("DesktopNavbarAuth_userInfo__SYFUt", [2, 4]);
+    removeElementsWithParent(
+      "DesktopNavbarAuth_linksContainer__PHnq0",
+      [3, 4, 5, 6]
+    );
+  }
+}
+
+function removeElementsByClass(className: string) {
+  const elements = document.querySelectorAll(`.${className}`);
+
+  elements.forEach((element) => {
+    element.remove();
+  });
+}
+
+function removeElementsWithParent(parentClassName: string, indexes: number[]) {
+  const parent = document.querySelector(`.${parentClassName}`);
+  const children = indexes.map((index) => parent?.children[index]);
+  children.forEach((child) => {
+    child?.remove();
+  });
+}
+function addCssByClass(
+  className: string,
+  styles: { [key: string]: string }
+): void {
+  const elements = document.querySelectorAll(`.${className}`);
+
+  if (elements.length > 0) {
+    elements.forEach((element) => {
+      for (const property in styles) {
+        (element as HTMLElement).style[property as any] = styles[property];
+      }
+    });
+  } else {
+    console.error(`No elements found with selector "${className}".`);
   }
 }

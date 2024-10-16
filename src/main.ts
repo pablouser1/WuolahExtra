@@ -43,17 +43,22 @@ GM_config.init({
       label: "Desactivar analíticas",
       default: true,
     },
-    force_dark: {
+    hide_aside: {
       type: "checkbox",
-      label: "Forzar modo oscuro",
-      default: false,
+      label: "Ocultar Barra Lateral",
+      default: true,
     },
     folder_download: {
       type: "checkbox",
       label: "[EXPERIMENTAL] Descargar carpeta",
       title: "¡Esta función aún está en desarrollo!",
       default: false,
-    }
+    },
+    clean_navbar: {
+      type: "checkbox",
+      label: "Limpiar Barra de Navegación",
+      default: true,
+    },
   },
   events: {
     init: () => {
@@ -65,7 +70,10 @@ GM_config.init({
       const clearMethod = GM_config.get("clear_pdf").toString();
 
       // ObjectURL override para gulag y pdflib
-      if (clearMethod === ClearMethods.PDFLIB || clearMethod === ClearMethods.GULAG) {
+      if (
+        clearMethod === ClearMethods.PDFLIB ||
+        clearMethod === ClearMethods.GULAG
+      ) {
         Misc.log("Overriding createObjectURL", Log.DEBUG);
         unsafeWindow.URL.createObjectURL = objectURLWrapper;
       }
@@ -76,7 +84,9 @@ GM_config.init({
       }
     },
     save: () => {
-      const ok = confirm("Los cambios se han guardado, ¿quieres refrescar la página para aplicar los cambios?");
+      const ok = confirm(
+        "Los cambios se han guardado, ¿quieres refrescar la página para aplicar los cambios?"
+      );
       if (ok) {
         window.location.reload();
       }
