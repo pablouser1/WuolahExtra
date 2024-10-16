@@ -207,10 +207,7 @@ export default class Hooks {
     });
   }
 
-  static isNavBarClean = false;
   static cleanNavbar(res: Response) {
-    if (this.isNavBarClean) return;
-    this.isNavBarClean = true;
     removeElementsWithParent("DesktopNavbarAuth_userInfo__SYFUt", [2, 4]);
     removeElementsWithParent(
       "DesktopNavbarAuth_linksContainer__PHnq0",
