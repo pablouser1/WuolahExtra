@@ -34,7 +34,7 @@ export default class Hooks {
       id: "force-dark",
       endpoint: /^\/v2\/user-preferences\/me$/,
       func: Hooks.forceDark,
-      cond: () => GM_config.get("force_dark"),
+      cond: () => true,
     },
     {
       id: "no-ui-ads",
@@ -50,9 +50,15 @@ export default class Hooks {
     },
     {
       id: "clean-aside",
-      endpoint: /\/v2\/communities\/.*\/subjects/,
+      endpoint: /\/v2\/rankings\/users/,
       func: Hooks.cleanAside,
-      cond: () => true, //TODO add config
+      cond: () => GM_config.get("hide_aside"),
+    },
+    {
+      id: "clean-navbar",
+      endpoint: /^\/v2\/me/,
+      func: Hooks.cleanNavbar,
+      cond: () => GM_config.get("clean_navbar"),
     },
   ];
 
@@ -192,15 +198,55 @@ export default class Hooks {
 
   static cleanAside(res: Response) {
     removeElementsByClass("SupportingPaneLayout_supportingPane__hR__U");
+    addCssByClass("SupportingPaneLayout_container__wvAa5", {
+      display: "block",
+      width: "750px",
+    });
+    addCssByClass("SupportingPaneLayout_main__nlLZa", {
+      width: "100%",
+    });
+  }
+
+  static isNavBarClean = false;
+  static cleanNavbar(res: Response) {
+    if (this.isNavBarClean) return;
+    this.isNavBarClean = true;
+    removeElementsWithParent("DesktopNavbarAuth_userInfo__SYFUt", [2, 4]);
+    removeElementsWithParent(
+      "DesktopNavbarAuth_linksContainer__PHnq0",
+      [3, 4, 5, 6]
+    );
   }
 }
 
 function removeElementsByClass(className: string) {
-  // Find all elements with the specified class
   const elements = document.querySelectorAll(`.${className}`);
 
-  // Loop through the NodeList and remove each element from the DOM
   elements.forEach((element) => {
     element.remove();
   });
+}
+
+function removeElementsWithParent(parentClassName: string, indexes: number[]) {
+  const parent = document.querySelector(`.${parentClassName}`);
+  const children = indexes.map((index) => parent?.children[index]);
+  children.forEach((child) => {
+    child?.remove();
+  });
+}
+function addCssByClass(
+  className: string,
+  styles: { [key: string]: string }
+): void {
+  const elements = document.querySelectorAll(`.${className}`);
+
+  if (elements.length > 0) {
+    elements.forEach((element) => {
+      for (const property in styles) {
+        (element as HTMLElement).style[property as any] = styles[property];
+      }
+    });
+  } else {
+    console.error(`No elements found with selector "${className}".`);
+  }
 }
