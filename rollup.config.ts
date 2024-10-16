@@ -9,7 +9,7 @@ import getMetablock from "./meta";
 // Map package name -> Global window name
 export const EXTERNAL_GLOBALS = {
   "pdf-lib": "PDFLib",
-  "jszip": "JSZip"
+  jszip: "JSZip",
 };
 
 const isProduction = !process.env.ROLLUP_WATCH;
@@ -35,7 +35,7 @@ if (!isProduction) {
 const config: RollupOptions = {
   input: "src/main.ts",
   output: {
-    file: "dist/WuolahExtra.user.js",
+    file: "dist/ZenWoulah.user.js",
     format: "esm",
     // Sourcemaps only for development
     sourcemap: isProduction ? false : "inline",
