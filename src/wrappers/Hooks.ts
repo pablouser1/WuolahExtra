@@ -261,26 +261,29 @@ function removeElementsByClass(className: string) {
 }
 
 function hideElementsWithParent(parentClassName: string, indexes: number[]) {
-  const parent = document.querySelector(`.${parentClassName}`);
-  const children = indexes.map((index) => parent?.children[index]);
-  children.forEach((child) => {
-    if (child)
-      (child as HTMLElement).style["display"] = "none"
-  });
-}
-function addCssByClass(
-  className: string,
-  styles: { [key: string]: string }
-): void {
-  const elements = document.querySelectorAll(`.${className}`);
-
-  if (elements.length > 0) {
-    elements.forEach((element) => {
-      for (const property in styles) {
-        (element as HTMLElement).style[property as any] = styles[property];
-      }
+  function hideElementsWithParent(parentClassName: string, indexes: number[]) {
+    const parent = document.querySelector(`.${parentClassName}`);
+    const children = indexes.map((index) => parent?.children[index]);
+    children.forEach((child) => {
+      if (child)
+        (child as HTMLElement).style["display"] = "none"
+      if (child)
+        (child as HTMLElement).style["display"] = "none"
     });
-  } else {
-    console.error(`No elements found with selector "${className}".`);
   }
-}
+  function addCssByClass(
+    className: string,
+    styles: { [key: string]: string }
+  ): void {
+    const elements = document.querySelectorAll(`.${className}`);
+
+    if (elements.length > 0) {
+      elements.forEach((element) => {
+        for (const property in styles) {
+          (element as HTMLElement).style[property as any] = styles[property];
+        }
+      });
+    } else {
+      console.error(`No elements found with selector "${className}".`);
+    }
+  }
