@@ -60,6 +60,12 @@ export default class Hooks {
       func: Hooks.cleanNavbar,
       cond: () => GM_config.get("clean_navbar"),
     },
+    {
+      id: "clean-feed",
+      endpoint: /^\/v2\/search\/.*/,
+      func: Hooks.cleanFeed,
+      cond: () => true,
+    },
   ];
 
   // -- Before -- //
@@ -207,12 +213,24 @@ export default class Hooks {
     });
   }
 
+  static isNavBarCleaned: boolean = false;
   static cleanNavbar(res: Response) {
-    removeElementsWithParent("DesktopNavbarAuth_userInfo__SYFUt", [2, 4]);
-    removeElementsWithParent(
+    if (this.isNavBarCleaned) return;
+    this.isNavBarCleaned = true;
+    hideElementsWithParent("DesktopNavbarAuth_userInfo__SYFUt", [2, 4]);
+    hideElementsWithParent(
       "DesktopNavbarAuth_linksContainer__PHnq0",
-      [3, 4, 5, 6]
+      [3, 4, 5, 6, 7, 8, 9]
     );
+  }
+
+  static isFeedCleaned: boolean = false;
+  static cleanFeed(res: Response) {
+    //if (this.isFeedCleaned) return;
+    this.isFeedCleaned = true;
+    removeElementsByClass("Body_title__MK9Zk");
+    removeElementsByClass("HomePage_postTitle__NU4Sf");
+    removeElementsByClass("infinite-scroll-component__outerdiv");
   }
 }
 
@@ -224,11 +242,12 @@ function removeElementsByClass(className: string) {
   });
 }
 
-function removeElementsWithParent(parentClassName: string, indexes: number[]) {
+function hideElementsWithParent(parentClassName: string, indexes: number[]) {
   const parent = document.querySelector(`.${parentClassName}`);
   const children = indexes.map((index) => parent?.children[index]);
   children.forEach((child) => {
-    child?.remove();
+    if (child)
+      (child as HTMLElement).style["display"] = "none"
   });
 }
 function addCssByClass(
