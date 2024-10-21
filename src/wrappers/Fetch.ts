@@ -11,10 +11,12 @@ export default class FetchWrapper {
   addHooks(h: HookConfig): void {
     if (h.before !== undefined) {
       this.before = h.before;
+
     }
 
     if (h.after !== undefined) {
       this.after = h.after;
+
     }
   }
 

@@ -59,6 +59,11 @@ GM_config.init({
       label: "Limpiar Barra de Navegación",
       default: true,
     },
+    hide_feed: {
+      type: "checkbox",
+      label: "Ocultar el feed",
+      default: true,
+    }
   },
   events: {
     init: () => {

@@ -51,21 +51,16 @@ export default class Hooks {
     {
       id: "clean-aside",
       endpoint: /\/v2\/rankings\/users/,
-      func: Hooks.cleanAside,
-      cond: () => GM_config.get("hide_aside"),
+      func: Hooks.hideAsideOnDownload,
+      cond: () => GM_config.get("f"),
     },
     {
-      id: "clean-navbar",
-      endpoint: /^\/v2\/me/,
-      func: Hooks.cleanNavbar,
-      cond: () => GM_config.get("clean_navbar"),
-    },
-    {
-      id: "clean-feed",
-      endpoint: /^\/v2\/search\/.*/,
-      func: Hooks.cleanFeed,
+      id: "page",
+      endpoint: /^\/v2\/.*/,
+      func: Hooks.onPageReload,
       cond: () => true,
-    },
+    }
+
   ];
 
   // -- Before -- //
@@ -199,41 +194,64 @@ export default class Hooks {
 
   /**
    * Elimina la barra lateral
-   * @todo
+   *
    */
 
-  static cleanAside(res: Response) {
-    removeElementsByClass("SupportingPaneLayout_supportingPane__hR__U");
-    addCssByClass("SupportingPaneLayout_container__wvAa5", {
-      display: "block",
-      width: "750px",
-    });
-    addCssByClass("SupportingPaneLayout_main__nlLZa", {
-      width: "100%",
-    });
+  static hideAsideOnDownload(res: Response) {
+    hideAside();
+  }
+  /**
+     * Limpia la Barra de Navegación
+     *
+     */
+
+
+  static onPageReload(res: Response) {
+    if (GM_config.get("clean_navbar"))
+      cleanNavbar();
+    if (GM_config.get("hide_feed"))
+      hideFeed()
+
+    if (GM_config.get("hide_aside"))
+      hideAside()
   }
 
-  static isNavBarCleaned: boolean = false;
-  static cleanNavbar(res: Response) {
-    if (this.isNavBarCleaned) return;
-    this.isNavBarCleaned = true;
-    hideElementsWithParent("DesktopNavbarAuth_userInfo__SYFUt", [2, 4]);
-    hideElementsWithParent(
-      "DesktopNavbarAuth_linksContainer__PHnq0",
-      [3, 4, 5, 6, 7, 8, 9]
-    );
-  }
 
-  static isFeedCleaned: boolean = false;
-  static cleanFeed(res: Response) {
-    //if (this.isFeedCleaned) return;
-    this.isFeedCleaned = true;
+}
+
+
+function cleanNavbar() {
+  hideElementsWithParent("DesktopNavbarAuth_userInfo__SYFUt", [2, 4]);
+  hideElementsWithParent(
+    "DesktopNavbarAuth_linksContainer__PHnq0",
+    [3, 4, 5, 6, 7, 8, 9]
+  );
+}
+
+function hideFeed() {
+
+
+  const checker = /https:\/\/wuolah.com\/apuntes\/.*/
+  const currentUrl = window.location.href;
+
+  if (!checker.test(currentUrl)) {
     removeElementsByClass("Body_title__MK9Zk");
     removeElementsByClass("HomePage_postTitle__NU4Sf");
     removeElementsByClass("infinite-scroll-component__outerdiv");
   }
+
 }
 
+function hideAside() {
+  removeElementsByClass("SupportingPaneLayout_supportingPane__hR__U");
+  addCssByClass("SupportingPaneLayout_container__wvAa5", {
+    display: "block",
+    width: "750px",
+  });
+  addCssByClass("SupportingPaneLayout_main__nlLZa", {
+    width: "100%",
+  });
+}
 function removeElementsByClass(className: string) {
   const elements = document.querySelectorAll(`.${className}`);
 
