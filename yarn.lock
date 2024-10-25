@@ -200,10 +200,10 @@ function-bind@^1.1.2:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.2.tgz#2c02d864d97f3ea6c8830c464cbd11ab6eab7a1c"
   integrity sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==
 
-gulagcleaner_wasm@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/gulagcleaner_wasm/-/gulagcleaner_wasm-0.15.0.tgz#2353693ef048ce53d54273e2e0c45ff1f25a996c"
-  integrity sha512-65kptelk5oIlqLXz7YNh2tClwUW+/zJX5mx+dOJv/8MIpR1fByEpOM9Ku/ONp9s/nBurzVbqdXq88KxKK8wjPw==
+gulagcleaner_wasm@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/gulagcleaner_wasm/-/gulagcleaner_wasm-0.15.1.tgz#2c42716d4ab04e641ff69a30312831021775b678"
+  integrity sha512-MhoLxTQYGXT4y6kRGIi0dGw+vfRcUaudrbBKMVeYSg+oKN3WLT3jUgcRFWtslNueYmNwL/29/Iz9K2rAlfwjrA==
 
 hasown@^2.0.0:
   version "2.0.2"
