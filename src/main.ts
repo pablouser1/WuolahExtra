@@ -53,6 +53,11 @@ GM_config.init({
       label: "[EXPERIMENTAL] Descargar carpeta",
       title: "¡Esta función aún está en desarrollo!",
       default: false,
+    },
+    trolah_basic: {
+      type: "checkbox",
+      label: "[TrolahCleaner] Activar modo básico",
+      default: false
     }
   },
   events: {

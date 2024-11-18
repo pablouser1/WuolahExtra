@@ -30,9 +30,7 @@ Muestra información para desarrolladores en la consola
 | Ninguno | - | Deshabilita todos los sitemas de eliminación de anuncios | none | -
 
 #### TrolahCleaner no funciona
-Puede ser por varios motivos:
-- Este método no funciona si utilizas el modo HTTPS-Only de Firefox / Chrome. Para poder usarlo tienes que desactivarlo temporalmente.
-- Quizás la web está caída, prueba a acceder directamente para comprobarlo.
+Quizás la web está caída, prueba a acceder directamente para comprobarlo.
 
 ### Limpiar UI
 Elimina elementos de la interfaz como patrocinios, enlaces sociales...

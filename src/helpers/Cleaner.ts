@@ -31,12 +31,16 @@ const clearGulag = (buf: ArrayBuffer): ArrayBuffer => {
   return clean_pdf(new Uint8Array(buf), false);
 };
 
-const clearTrolah = async (buf: ArrayBuffer): Promise<ArrayBuffer> => {
+const clearTrolah = async (buf: ArrayBuffer, basico: boolean): Promise<ArrayBuffer> => {
   try {
     const data = new FormData();
-    data.append('file', new Blob([buf]));
+    data.append('file', new Blob([buf], {
+      type: "application/pdf"
+    }));
+    data.append('modo_basico', basico.toString());
+
     const res = await xmlRequestPromise({
-      url: 'http://lostemmye.lime.seedhost.eu:2024/process_pdf',
+      url: 'https://lime.seedhost.eu/lostemmye/trolah_php/',
       method: 'POST',
       data
     });
@@ -83,7 +87,8 @@ const handlePDF = async (origData: ArrayBuffer): Promise<ArrayBuffer> => {
       data = clearGulag(origData);
       break;
     case ClearMethods.TROLAH:
-      data = await clearTrolah(origData);
+      const basico = GM_config.get("trolah_basic");
+      data = await clearTrolah(origData, basico.valueOf() as boolean);
       break;
     case ClearMethods.NONE:
       data = origData;
