@@ -25,8 +25,14 @@ Muestra información para desarrolladores en la consola
 | Método | Estado | Detalles | Config ID | + info |
 | :--: | :--: | :--: | :--: | :--: |
 | GulagCleaner | ✅ | **Activado por defecto**, buenos resultados | gulag | [Source](https://github.com/YM162/gulagcleaner) |
+| TrolahCleaner | ✅ | **AVISO: CÓDIGO CERRADO**, buenos resultados | trolah | [Web](http://lostemmye.lime.seedhost.eu:2024) |
 | PDFLib | ❌ | En desarrollo | pdflib | [Source](https://github.com/Hopding/pdf-lib)
 | Ninguno | - | Deshabilita todos los sitemas de eliminación de anuncios | none | -
+
+#### TrolahCleaner no funciona
+Puede ser por varios motivos:
+- Este método no funciona si utilizas el modo HTTPS-Only de Firefox / Chrome. Para poder usarlo tienes que desactivarlo temporalmente.
+- Quizás la web está caída, prueba a acceder directamente para comprobarlo.
 
 ### Limpiar UI
 Elimina elementos de la interfaz como patrocinios, enlaces sociales...

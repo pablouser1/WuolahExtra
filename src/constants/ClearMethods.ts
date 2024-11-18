@@ -4,7 +4,8 @@
 enum ClearMethods {
   NONE = "none",
   GULAG = "gulag",
-  PDFLIB = "pdflib",
+  TROLAH = "trolah",
+  PDFLIB = "pdflib"
 }
 
 export default ClearMethods;

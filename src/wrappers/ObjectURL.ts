@@ -21,6 +21,10 @@ const objectURLWrapper = (obj: Blob | MediaSource): string => {
 
     const data = await handlePDF(buf);
 
+    if (data === null) {
+      return;
+    }
+
     // Nuevo blob y abrimos
     const newBlob = new Blob([data], { type: "application/pdf" });
     openBlob(newBlob, await title);

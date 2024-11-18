@@ -65,7 +65,7 @@ GM_config.init({
       const clearMethod = GM_config.get("clear_pdf").toString();
 
       // ObjectURL override para gulag y pdflib
-      if (clearMethod === ClearMethods.PDFLIB || clearMethod === ClearMethods.GULAG) {
+      if (clearMethod !== ClearMethods.NONE) {
         Misc.log("Overriding createObjectURL", Log.DEBUG);
         unsafeWindow.URL.createObjectURL = objectURLWrapper;
       }

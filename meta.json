@@ -6,6 +6,7 @@
     "GM.setValue",
     "GM.registerMenuCommand",
     "GM.getResourceUrl",
+    "GM.xmlHttpRequest",
     "unsafeWindow"
   ],
   "downloadURL": "https://github.com/pablouser1/WuolahExtra/releases/latest/download/WuolahExtra.user.js",

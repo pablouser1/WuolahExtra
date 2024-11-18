@@ -2,6 +2,7 @@ import { clean_pdf } from "gulagcleaner_wasm";
 import ClearMethods from "../constants/ClearMethods";
 import { PDFDocument } from "pdf-lib";
 import { origcreateObjectURL } from "../originals";
+import xmlRequestPromise from "./BypassRequest";
 
 /**
  * Wrapper para abrir un Blob
@@ -29,6 +30,27 @@ export const openBlob = (obj: Blob, filename: string = "", revokeWhenOpened: boo
 const clearGulag = (buf: ArrayBuffer): ArrayBuffer => {
   return clean_pdf(new Uint8Array(buf), false);
 };
+
+const clearTrolah = async (buf: ArrayBuffer): Promise<ArrayBuffer> => {
+  try {
+    const data = new FormData();
+    data.append('file', new Blob([buf]));
+    const res = await xmlRequestPromise({
+      url: 'http://lostemmye.lime.seedhost.eu:2024/process_pdf',
+      method: 'POST',
+      data
+    });
+
+    if (res.response === null) {
+      return buf;
+    }
+
+    return res.response!;
+  } catch (e) {
+    alert("¡No se pudo obtener el PDF de TrolahCleaner, usando PDF original!\nConsulta https://github.com/pablouser1/WuolahExtra para más información");
+    return buf;
+  }
+}
 
 /**
  * Limpia el documento usando el método PDFLib
@@ -59,6 +81,9 @@ const handlePDF = async (origData: ArrayBuffer): Promise<ArrayBuffer> => {
       break;
     case ClearMethods.GULAG:
       data = clearGulag(origData);
+      break;
+    case ClearMethods.TROLAH:
+      data = await clearTrolah(origData);
       break;
     case ClearMethods.NONE:
       data = origData;
