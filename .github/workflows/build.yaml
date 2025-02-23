@@ -28,6 +28,7 @@ jobs:
         with:
           artifacts: "dist/WuolahExtra.user.js"
           artifactContentType: text/javascript
+          generateReleaseNotes: true
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: v${{ steps.package-version.outputs.current-version }}
           skipIfReleaseExists: true
