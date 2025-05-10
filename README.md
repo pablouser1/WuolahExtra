@@ -25,7 +25,7 @@ Muestra información para desarrolladores en la consola
 | Método | Estado | Detalles | Config ID | + info |
 | :--: | :--: | :--: | :--: | :--: |
 | GulagCleaner | ✅ | **Activado por defecto**, buenos resultados | gulag | [Source](https://github.com/YM162/gulagcleaner) |
-| TrolahCleaner | ✅ | **AVISO: CÓDIGO CERRADO**, buenos resultados | trolah | [Web](http://lostemmye.lime.seedhost.eu:2024) |
+| TrolahCleaner | ✅ | **AVISO: CÓDIGO CERRADO**, buenos resultados | trolah | [Web](https://trolah.pp.ua) |
 | PDFLib | ❌ | En desarrollo | pdflib | [Source](https://github.com/Hopding/pdf-lib)
 | Ninguno | - | Deshabilita todos los sitemas de eliminación de anuncios | none | -
 

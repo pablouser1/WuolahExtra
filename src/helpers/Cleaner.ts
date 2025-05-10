@@ -40,7 +40,7 @@ const clearTrolah = async (buf: ArrayBuffer, basico: boolean): Promise<ArrayBuff
     data.append('modo_basico', basico.toString());
 
     const res = await xmlRequestPromise({
-      url: 'https://lime.seedhost.eu/lostemmye/trolah_php/',
+      url: 'https://trolah.pp.ua/process_pdf',
       method: 'POST',
       data
     });
