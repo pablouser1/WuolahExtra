@@ -32,8 +32,14 @@ const getResources = (): Record<string, string> => {
   const arr = Object.entries(PKG_RESOURCES);
 
   for (const el of arr) {
-    const ver = getPkgVer(el[0]);
-    entries[el[0]] = `https://cdn.jsdelivr.net/npm/${el[0]}@${ver}/${el[1]}`;
+    const [pkgName, fileName] = el;
+    if (pkgName === "gulagcleaner_wasm") {
+      // always serve gulagcleaner_wasm lastest
+      entries[pkgName] = `https://cdn.jsdelivr.net/npm/${pkgName}/${fileName}`;
+    } else {
+      const ver = getPkgVer(pkgName);
+      entries[pkgName] = `https://cdn.jsdelivr.net/npm/${pkgName}@${ver}/${fileName}`;
+    }
   }
 
   return entries;
