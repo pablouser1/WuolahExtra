@@ -93,7 +93,13 @@ export default class Hooks {
           .json()
           .then((d) => ({
             ...d, item: {
-              theme: "wuolah-theme-dark"
+              theme: {
+                id: "wuolah-theme-dark",
+                properties: {
+                  colorSchemeAlias: "wuolah-color-scheme-dark",
+                  previewUrl: "https://cdn.wuolahservices.com/features/themes/default/preview.png"
+                }
+              }
             }
           }));
       res.json = json;
