@@ -13,6 +13,16 @@ export default class Api {
   static TOKEN_KEY = "token";
 
   /**
+   * Devuelve el perfil del usuario actual.
+   * Nota: usa `origFetch` para evitar hooks de userscript (p.ej. makePro).
+   */
+  static async me(): Promise<{ captchaCounter?: number } & Record<string, unknown>> {
+    const res = await origFetch(`${Api.BASE_URL}/me`, Api._buildInit());
+    const json = (await res.json()) as { captchaCounter?: number } & Record<string, unknown>;
+    return json;
+  }
+
+  /**
    * Lista todos los documentos de una carpeta
    * @param id Id carpeta
    * @returns Todos los documentos pertenecientes a la carpeta
@@ -33,11 +43,36 @@ export default class Api {
   }
 
   /**
+   * Obtiene la información de una subida (carpeta o archivo)
+   * @param id Id de la subida
+   * @returns Datos de la subida
+   */
+  static async uploadInfo(id: number): Promise<Doc> {
+    const res = await origFetch(
+      `${Api.BASE_URL}/uploads/${id}`,
+      Api._buildInit()
+    );
+    const json: Doc = await res.json();
+    return json;
+  }
+
+  /**
    * Consigue URL del documento a partir de su ID
    * @param id Id documento
    * @returns Url para descargar documento
    */
   static async docUrl(id: number): Promise<string | null> {
+    const result = await Api.docUrlResult(id);
+    return result.url;
+  }
+
+  /**
+   * Igual que `docUrl`, pero devuelve información extra cuando falla.
+   * Útil para detectar captchas (p.ej. 429 + { code: "FI008" }).
+   */
+  static async docUrlResult(
+    id: number
+  ): Promise<{ url: string | null; status: number; code?: string }> {
     const body: DownloadBody = {
       adblockDetected: false,
       ads: [],
@@ -64,11 +99,18 @@ export default class Api {
     });
 
     if (!res.ok) {
-      return null;
+      let code: string | undefined;
+      try {
+        const errJson = (await res.clone().json()) as { code?: string };
+        code = errJson.code;
+      } catch {
+        // ignore
+      }
+      return { url: null, status: res.status, code };
     }
 
     const data: DocUrl = await res.json();
-    return data.url;
+    return { url: data.url, status: res.status };
   }
 
   /**

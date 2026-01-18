@@ -5,6 +5,7 @@ import FetchWrapper from "./wrappers/Fetch";
 import { addOptions } from "./ui";
 import ClearMethods from "./constants/ClearMethods";
 import objectURLWrapper from "./wrappers/ObjectURL";
+import { CaptchaCounterDebugUI } from "./ui";
 
 // fix issue with unsafeWindow.URL
 declare const unsafeWindow: Window & typeof globalThis;
@@ -65,6 +66,11 @@ GM_config.init({
       // Modo debug en fetch hook
       if (GM_config.get("debug")) {
         fetchWrapper.setDebug(true);
+        try {
+          const ui = new CaptchaCounterDebugUI();
+          ui.start(3000);
+        } catch {
+        }
       }
 
       const clearMethod = GM_config.get("clear_pdf").toString();
