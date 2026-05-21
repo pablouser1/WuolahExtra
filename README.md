@@ -1,4 +1,11 @@
 # WuolahExtra
+> [!WARNING]
+> **This repository has moved to Codeberg!**
+> Development on GitHub has been discontinued, and this repository is now read-only.
+> 
+> New repository:
+> 🔗 **[codeberg.org/ferreiro/WuolahExtra](https://codeberg.org/ferreiro/WuolahExtra)**
+
 Userscript para Wuolah.
 
 Para usar este programa necesitas un gestor de userscripts (por ejemplo, [ViolentMonkey](https://violentmonkey.github.io)) instalado en tu navegador.
